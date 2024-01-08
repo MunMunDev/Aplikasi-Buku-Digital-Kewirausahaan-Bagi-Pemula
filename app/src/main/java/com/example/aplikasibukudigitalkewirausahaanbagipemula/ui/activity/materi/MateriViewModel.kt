@@ -8,13 +8,15 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.database.api.
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MateriViewModel @Inject constructor(
     private val api: ApiService
 ): ViewModel() {
-    val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
+    private val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
 
     fun fetchDataMateri() {
         viewModelScope.launch {
