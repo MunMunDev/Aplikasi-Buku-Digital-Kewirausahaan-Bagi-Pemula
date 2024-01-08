@@ -1,16 +1,21 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+//    id 'com.google.gms.google-services'
 }
 
 android {
     namespace 'com.example.aplikasibukudigitalkewirausahaanbagipemula'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.aplikasibukudigitalkewirausahaanbagipemula"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -24,21 +29,62 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
+    }
+    buildFeatures{
+        viewBinding = true
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.9.0'
+    def retrofitVersion = "2.9.0"
+    def lifecycleVersion = "2.6.2"
+    def coroutinesVersion = "1.6.4"
+    def activityKTXVersion = "1.8.1"
+    def fragmentKTXVersion = "1.6.2"
+    def hiltVersion = "2.44"
+
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    // lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+    // KTX
+    implementation "androidx.activity:activity-ktx:$activityKTXVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentKTXVersion"
+
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    //
+//    implementation 'com.github.afreakyelf:Pdf-Viewer:v1.0.7'
+//    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+//    implementation 'com.github.mkw8263:MindevPDFViewer:1.0.4'
+}
+
+kapt {
+    correctErrorTypes true
 }
