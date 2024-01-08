@@ -11,8 +11,10 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoMo
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityVideoBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class VideoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVideoBinding
     @Inject lateinit var loading: LoadingAlertDialog
