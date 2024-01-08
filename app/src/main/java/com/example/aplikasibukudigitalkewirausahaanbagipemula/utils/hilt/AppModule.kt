@@ -1,6 +1,8 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.hilt
 
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.database.api.ApiService
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.TanggalDanWaktu
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -23,9 +25,11 @@ object AppModule {
         .build()
         .create(ApiService::class.java)
 
-    @Provides
-    @Singleton
-    fun tanggalDanWaktu(): TanggalDanWaktu = TanggalDanWaktu()
+//    @Provides
+//    @Singleton
+//    fun tanggalDanWaktu(): TanggalDanWaktu = TanggalDanWaktu()
 
+    @Provides
+    fun loading(): LoadingAlertDialog = LoadingAlertDialog()
 
 }
