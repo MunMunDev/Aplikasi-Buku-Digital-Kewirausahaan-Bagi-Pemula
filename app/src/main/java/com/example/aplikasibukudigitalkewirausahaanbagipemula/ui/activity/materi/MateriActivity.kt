@@ -71,12 +71,12 @@ class MateriActivity : AppCompatActivity() {
     private fun setRecyclerViewMateri(data: ArrayList<MateriModel>) {
         adapter = SemuaMateriAdapter(data)
         binding.apply {
-            rvData.layoutManager = LinearLayoutManager(
+            rvMateri.layoutManager = LinearLayoutManager(
                 this@MateriActivity,
                 LinearLayoutManager.VERTICAL,
                 false
             )
-            rvData.adapter = adapter
+            rvMateri.adapter = adapter
         }
     }
 }
