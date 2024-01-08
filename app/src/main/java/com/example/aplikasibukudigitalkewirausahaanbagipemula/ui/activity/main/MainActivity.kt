@@ -13,7 +13,9 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.PopulerVid
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMainBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.materi.MateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.search.SearchDataActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.video.VideoActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
@@ -42,33 +44,28 @@ class MainActivity : AppCompatActivity() {
         getDataVideo()
     }
 
-    private fun setKontrolNavigationDrawer() {
-        binding.apply {
-            kontrolNavigationDrawer = KontrolNavigationDrawer(this@MainActivity)
-            kontrolNavigationDrawer.cekSebagai(navView)
-            kontrolNavigationDrawer.onClickItemNavigationDrawer(navView, drawerLayoutMain, ivDrawerView, this@MainActivity)
-        }
-    }
-
     private fun setButton() {
         binding.apply {
             srcData.setOnClickListener {
                 startActivity(Intent(this@MainActivity, SearchDataActivity::class.java))
             }
-//            srcMateri.setOnSearchClickListener {
-//                srcMateri.isActivated = false
-//                srcMateri.isFocusable = false
-//                startActivity(Intent(this@MainActivity, SearchDataActivity::class.java))
-//            }
             btnMateri.setOnClickListener {
-
+                startActivity(Intent(this@MainActivity, MateriActivity::class.java))
             }
             btnVideo.setOnClickListener {
-
+                startActivity(Intent(this@MainActivity, VideoActivity::class.java))
             }
             btnAkun.setOnClickListener {
 
             }
+        }
+    }
+
+    private fun setKontrolNavigationDrawer() {
+        binding.apply {
+            kontrolNavigationDrawer = KontrolNavigationDrawer(this@MainActivity)
+            kontrolNavigationDrawer.cekSebagai(navView)
+            kontrolNavigationDrawer.onClickItemNavigationDrawer(navView, drawerLayoutMain, ivDrawerView, this@MainActivity)
         }
     }
 

@@ -57,13 +57,15 @@ class SearchDataActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.d("MainActivityTAG", "onQueryTextChange:2: $newText ")
-                if(!cekSearchData){     // Materi
-                    adapterMateri.searchData(newText!!)
-                    Log.d("MainActivityTAG", "materi")
-                }else {     // Video
-                    adapterVideo.searchData(newText!!)
-                    Log.d("MainActivityTAG", "video ")
-                }
+//                if(!cekSearchData){     // Materi
+//                    adapterMateri.searchData(newText!!)
+//                    Log.d("MainActivityTAG", "materi")
+//                }else {     // Video
+//                    adapterVideo.searchData(newText!!)
+//                    Log.d("MainActivityTAG", "video ")
+//                }
+                adapterMateri.searchData(newText!!)
+                adapterVideo.searchData(newText!!)
                 return true
             }
 
@@ -83,7 +85,7 @@ class SearchDataActivity : AppCompatActivity() {
                     rbMateri.setTextColor(resources.getColor(R.color.white))
                     rbVideo.setTextColor(resources.getColor(R.color.primaryColor))
                     cekSearchData = false
-                    setAdapterMateri(listMateri)
+                    setRecyclerViewMateri(listMateri)
                 }
             }
             rbVideo.setOnClickListener {
@@ -91,7 +93,7 @@ class SearchDataActivity : AppCompatActivity() {
                     rbVideo.setTextColor(resources.getColor(R.color.white))
                     rbMateri.setTextColor(resources.getColor(R.color.primaryColor))
                     cekSearchData = true
-                    setAdapterVideo(listVideo)
+                    setRecyclerViewVideo()
                 }
             }
         }
@@ -122,12 +124,12 @@ class SearchDataActivity : AppCompatActivity() {
         val dataArrayList = arrayListOf<MateriModel>()
         dataArrayList.addAll(sort)
         listMateri = dataArrayList
-        setAdapterMateri(dataArrayList)
+        adapterMateri = SemuaMateriAdapter(listMateri)
+        setRecyclerViewMateri(dataArrayList)
     }
 
-    private fun setAdapterMateri(data: ArrayList<MateriModel>) {
+    private fun setRecyclerViewMateri(data: ArrayList<MateriModel>) {
         binding.apply {
-            adapterMateri = SemuaMateriAdapter(data)
             rvData.layoutManager = LinearLayoutManager(
                 this@SearchDataActivity,
                 LinearLayoutManager.VERTICAL,
@@ -162,12 +164,12 @@ class SearchDataActivity : AppCompatActivity() {
         val dataArrayList = arrayListOf<VideoModel>()
         dataArrayList.addAll(sort)
         listVideo = dataArrayList
-//        setAdapterVideo(dataArrayList)
+        adapterVideo = SemuaVideoAdapter(listVideo)
+//        setRecyclerViewVideo(dataArrayList)
     }
 
-    private fun setAdapterVideo(data: ArrayList<VideoModel>) {
+    private fun setRecyclerViewVideo() {
         binding.apply {
-            adapterVideo = SemuaVideoAdapter(data)
             rvData.layoutManager = LinearLayoutManager(
                 this@SearchDataActivity,
                 LinearLayoutManager.VERTICAL,
