@@ -13,7 +13,9 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.PopulerVid
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMainBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.materi.MateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.search.SearchDataActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.video.VideoActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
@@ -42,33 +44,34 @@ class MainActivity : AppCompatActivity() {
         getDataVideo()
     }
 
-    private fun setKontrolNavigationDrawer() {
-        binding.apply {
-            kontrolNavigationDrawer = KontrolNavigationDrawer(this@MainActivity)
-            kontrolNavigationDrawer.cekSebagai(navView)
-            kontrolNavigationDrawer.onClickItemNavigationDrawer(navView, drawerLayoutMain, ivDrawerView, this@MainActivity)
-        }
-    }
-
     private fun setButton() {
         binding.apply {
             srcData.setOnClickListener {
                 startActivity(Intent(this@MainActivity, SearchDataActivity::class.java))
             }
-//            srcMateri.setOnSearchClickListener {
-//                srcMateri.isActivated = false
-//                srcMateri.isFocusable = false
-//                startActivity(Intent(this@MainActivity, SearchDataActivity::class.java))
-//            }
             btnMateri.setOnClickListener {
-
+                startActivity(Intent(this@MainActivity, MateriActivity::class.java))
             }
             btnVideo.setOnClickListener {
-
+                startActivity(Intent(this@MainActivity, VideoActivity::class.java))
             }
             btnAkun.setOnClickListener {
 
             }
+            tvViewAllMateri.setOnClickListener {
+                startActivity(Intent(this@MainActivity, MateriActivity::class.java))
+            }
+            tvViewAllVideo.setOnClickListener {
+                startActivity(Intent(this@MainActivity, VideoActivity::class.java))
+            }
+        }
+    }
+
+    private fun setKontrolNavigationDrawer() {
+        binding.apply {
+            kontrolNavigationDrawer = KontrolNavigationDrawer(this@MainActivity)
+            kontrolNavigationDrawer.cekSebagai(navView)
+            kontrolNavigationDrawer.onClickItemNavigationDrawer(navView, drawerLayoutMain, ivDrawerView, this@MainActivity)
         }
     }
 
@@ -88,12 +91,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setFailureDataMateri(message: String) {
         loading.alertDialogCancel()
+        setOffShimmerMateri()
         setNoHaveMateri()
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setSuccessDataMateri(data: ArrayList<MateriModel>) {
         loading.alertDialogCancel()
+        setOffShimmerMateri()
 
         if(data.isNotEmpty()){
             setHaveMateri()
@@ -116,6 +121,19 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             rvTrendsMateri.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             rvTrendsMateri.adapter = adapter
+        }
+    }
+
+    private fun setOffShimmerMateri(){
+        binding.apply {
+            smMateri.stopShimmer()
+            smTitleTrendsMateri.visibility = View.GONE
+            smViewAllMateri.visibility = View.GONE
+            smMateri.visibility = View.GONE
+
+            tvTitleTrendsMateri.visibility = View.VISIBLE
+            tvViewAllMateri.visibility = View.VISIBLE
+            rvTrendsMateri.visibility = View.VISIBLE
         }
     }
 
@@ -151,11 +169,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFailureDataVideo(message: String) {
+        setOffShimmerVideo()
         setNoHaveVideo()
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setSuccessDataVideo(data: ArrayList<VideoModel>) {
+        setOffShimmerVideo()
+
         if(data.isNotEmpty()){
             setHaveVideo()
             val sort = data.sortedWith(compareBy { it.jumlahPelihat })
@@ -172,6 +193,19 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             rvTrendsVideo.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             rvTrendsVideo.adapter = adapterVideoPopuler
+        }
+    }
+
+    private fun setOffShimmerVideo(){
+        binding.apply {
+            smVideo.stopShimmer()
+            smTitleTrendsVideo.visibility = View.GONE
+            smViewAllVideo.visibility = View.GONE
+            smVideo.visibility = View.GONE
+
+            tvTitleTrendsVideo.visibility = View.VISIBLE
+            tvViewAllVideo.visibility = View.VISIBLE
+            rvTrendsVideo.visibility = View.VISIBLE
         }
     }
 

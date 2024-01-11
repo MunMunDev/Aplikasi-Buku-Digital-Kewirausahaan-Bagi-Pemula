@@ -11,6 +11,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.load.engine.Resource
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.main.MainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.materi.MateriActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.video.VideoActivity
 
 class KontrolNavigationDrawer(var context: Context) {
     var sharedPreferences = SharedPreferencesLogin(context)
@@ -30,6 +32,16 @@ class KontrolNavigationDrawer(var context: Context) {
             when(it.itemId) {
                 R.id.userNavDrawerHome -> {
                     val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)
+                    activity.finish()
+                }
+                R.id.userNavDrawerMateri -> {
+                    val intent = Intent(context, MateriActivity::class.java)
+                    context.startActivity(intent)
+                    activity.finish()
+                }
+                R.id.userNavDrawerVideo -> {
+                    val intent = Intent(context, VideoActivity::class.java)
                     context.startActivity(intent)
                     activity.finish()
                 }

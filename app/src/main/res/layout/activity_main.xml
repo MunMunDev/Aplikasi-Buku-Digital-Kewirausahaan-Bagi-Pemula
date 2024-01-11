@@ -251,7 +251,8 @@
                 android:text="Trends Materi"
                 android:textSize="16sp"
                 android:textColor="@color/primaryColor"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvViewAllMateri"
@@ -264,7 +265,8 @@
                 android:text="View All  >"
                 android:textSize="16sp"
                 android:textColor="@color/primaryColor"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTrendsMateri"
@@ -275,7 +277,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="16dp"
                 android:paddingEnd="40dp"
-                android:nestedScrollingEnabled="true" />
+                android:nestedScrollingEnabled="true"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvTitleTrendsVideo"
@@ -288,7 +291,8 @@
                 android:text="Trends Video"
                 android:textSize="16sp"
                 android:textColor="@color/primaryColor"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvViewAllVideo"
@@ -301,7 +305,8 @@
                 android:text="View All  >"
                 android:textSize="16sp"
                 android:textColor="@color/primaryColor"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTrendsVideo"
@@ -312,8 +317,104 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="16dp"
                 android:paddingEnd="40dp"
-                android:nestedScrollingEnabled="true" />
+                android:nestedScrollingEnabled="true"
+                android:visibility="gone"/>
 
+            <TextView
+                android:id="@+id/smTitleTrendsMateri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/btnMateri"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Trends Materi"
+                android:textSize="16sp"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/smViewAllMateri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/btnMateri"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:text="View All  >"
+                android:textSize="16sp"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"/>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/smMateri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/smTitleTrendsMateri"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="10dp">
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <include layout="@layout/shimmer_list_data_populer"/>
+                        <include layout="@layout/shimmer_list_data_populer"/>
+                        <include layout="@layout/shimmer_list_data_populer"/>
+                        <include layout="@layout/shimmer_list_data_populer"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <TextView
+                android:id="@+id/smTitleTrendsVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/smMateri"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Trends Video"
+                android:textSize="16sp"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/smViewAllVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/smMateri"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:text="View All  >"
+                android:textSize="16sp"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"/>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/smVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/smTitleTrendsVideo"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="10dp">
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <include layout="@layout/shimmer_list_data_populer"/>
+                        <include layout="@layout/shimmer_list_data_populer"/>
+                        <include layout="@layout/shimmer_list_data_populer"/>
+                        <include layout="@layout/shimmer_list_data_populer"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </com.facebook.shimmer.ShimmerFrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

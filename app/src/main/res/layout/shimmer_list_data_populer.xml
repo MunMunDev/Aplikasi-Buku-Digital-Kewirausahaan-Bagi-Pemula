@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="240dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginTop="4dp"
+    app:cardCornerRadius="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/ivGambarMateri"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@color/abuabu_tua"
+            android:scaleType="centerCrop"
+            android:elevation="1dp"/>
+        <View
+            android:id="@+id/bgTransparent"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:elevation="10dp"
+            android:background="@color/backgroundTransparent"/>
+
+        <TextView
+            android:id="@+id/tvJudulMateri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/tvNamaPemateri"
+            app:layout_constraintTop_toTopOf="@id/bgTransparent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:textSize="14sp"
+            android:elevation="20dp"
+            android:background="@color/abuabu_tua"/>
+
+        <TextView
+            android:id="@+id/tvNamaPemateri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvJudulMateri"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="12dp"
+            android:textSize="14sp"
+            android:elevation="20dp"
+            android:background="@color/abuabu_tua"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
