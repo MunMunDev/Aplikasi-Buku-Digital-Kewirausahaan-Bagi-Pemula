@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="165dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/abuabu_muda">
+        <ImageView
+            android:id="@+id/ivGambarMateri"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/abuabu_tua"
+            android:scaleType="centerCrop"
+            android:elevation="1dp"/>
+
+        <TextView
+            android:id="@+id/tvJudulMateri"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivGambarMateri"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:text="Judul Materi anda tentang ini dan itu judul ini adalah materi kewirausahaan"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/abuabu_tua"
+            android:background="@color/abuabu_tua"
+            android:elevation="20dp"/>
+
+        <TextView
+            android:id="@+id/tvNamaPemateri"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvJudulMateri"
+            app:layout_constraintStart_toEndOf="@id/ivGambarMateri"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Prof. Dr. Andi Andi Andi Andi, M.Kom."
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="@color/abuabu_tua"
+            android:background="@color/abuabu_tua"
+            android:elevation="20dp"/>
+
+        <TextView
+            android:id="@+id/tvJumlahDilihat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvNamaPemateri"
+            app:layout_constraintStart_toEndOf="@id/ivGambarMateri"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="300x Di Lihat"
+            android:textStyle="bold|italic"
+            android:textSize="14sp"
+            android:textColor="@color/abuabu_tua"
+            android:background="@color/abuabu_tua"
+            android:elevation="20dp"/>
+
+        <Button
+            android:id="@+id/btnBuka"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivGambarMateri"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:text="Read Now"
+            android:textColor="@color/abuabu_tua"
+            android:backgroundTint="@color/abuabu_tua"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
