@@ -8,14 +8,14 @@
             android:id="@+id/userNavDrawerHome"
             android:title="Halaman Home"
             android:icon="@drawable/baseline_home_24"/>
-<!--        <item-->
-<!--            android:id="@+id/userNavDrawerRiwayatPembayaran"-->
-<!--            android:title="Riwayat Pembayaran"-->
-<!--            android:icon="@drawable/icon_riwayat_pembayaran"/>-->
-<!--        <item-->
-<!--            android:id="@+id/userNavDrawerAkun"-->
-<!--            android:title="Akun Anda"-->
-<!--            android:icon="@drawable/baseline_person_24"/>-->
+        <item
+            android:id="@+id/userNavDrawerMateri"
+            android:title="Materi"
+            android:icon="@drawable/baseline_menu_book_24"/>
+        <item
+            android:id="@+id/userNavDrawerVideo"
+            android:title="Video"
+            android:icon="@drawable/baseline_ondemand_video_24"/>
     </group>
 
 <!--    <group android:id="@+id/userDrawerBottom">-->
