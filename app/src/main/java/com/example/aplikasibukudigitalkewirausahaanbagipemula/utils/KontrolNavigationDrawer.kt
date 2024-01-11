@@ -4,15 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.bumptech.glide.load.engine.Resource
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.main.MainActivity
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.materi.MateriActivity
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.video.VideoActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.MainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.MateriActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.VideoActivity
 
 class KontrolNavigationDrawer(var context: Context) {
     var sharedPreferences = SharedPreferencesLogin(context)

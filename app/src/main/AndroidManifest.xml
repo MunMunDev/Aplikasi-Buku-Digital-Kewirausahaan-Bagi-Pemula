@@ -19,7 +19,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.login.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.SplashScreenActivity"
@@ -31,22 +34,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.video.VideoActivity"
+            android:name=".ui.activity.user.VideoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.materi.MateriActivity"
+            android:name=".ui.activity.user.MateriActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.search.SearchDataActivity"
+            android:name=".ui.activity.user.SearchDataActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.read_pdf.ReadPdfActivity"
+            android:name=".ui.activity.user.ReadPdfActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.main.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:name=".ui.activity.user.MainActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.read_pdf
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

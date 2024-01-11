@@ -6,8 +6,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.UsersMo
 class SharedPreferencesLogin(val context: Context) {
     val keyIdUser = "keyIdUser"
     val keyNama = "keyNama"
-    val keyIdBlok = "keyIdBlok"
-    val keyAlamat = "keyAlamat"
+    val keyUmur = "keyUmur"
     val keyNomorHp = "keyNomorHp"
     val keyUsername = "keyUsername"
     val keyPassword = "keyPassword"
@@ -20,41 +19,12 @@ class SharedPreferencesLogin(val context: Context) {
         editPref.apply{
             putInt(keyIdUser, id_user)
             putString(keyNama, nama)
-            putString(keyIdBlok, idBlok)
-            putString(keyAlamat, alamat)
+            putString(keyUmur, alamat)
             putString(keyNomorHp, nomorHp)
             putString(keyUsername, username)
             putString(keyPassword, password)
             putString(keySebagai, sebagai)
             apply()
-        }
-    }
-
-//    fun setLogin(id_user:Int, nama:String, idBlok:String, alamat:String, nomorHp:String, username:String, password:String, sebagai:String){
-//        editPref.apply{
-//            putInt(keyIdUser, id_user)
-//            putString(keyNama, nama)
-//            putString(keyIdBlok, idBlok)
-//            putString(keyAlamat, alamat)
-//            putString(keyNomorHp, nomorHp)
-//            putString(keyUsername, username)
-//            putString(keyPassword, password)
-//            putString(keySebagai, sebagai)
-//            apply()
-//        }
-//    }
-
-    fun setLoginUsersModel(user: UsersModel){
-        editPref.apply{
-//            putInt(keyIdUser, user.idUser!!.toInt())
-//            putString(keyNama, user.nama)
-////            putString(keyIdBlok, user.idBlok)
-//            putString(keyAlamat, user.alamat)
-//            putString(keyNomorHp, user.nomorHp)
-//            putString(keyUsername, user.username)
-//            putString(keyPassword, user.password)
-//            putString(keySebagai, user.sebagai)
-//            apply()
         }
     }
 
@@ -64,11 +34,8 @@ class SharedPreferencesLogin(val context: Context) {
     fun getNama():String{
         return sharedPref.getString(keyNama, "").toString()
     }
-    fun getIdBlok(): String{
-        return sharedPref.getString(keyIdBlok, "").toString()
-    }
-    fun getAlamat():String{
-        return sharedPref.getString(keyAlamat, "").toString()
+    fun getUmur():String{
+        return sharedPref.getString(keyUmur, "").toString()
     }
     fun getNomorHp():String{
         return sharedPref.getString(keyNomorHp, "").toString()

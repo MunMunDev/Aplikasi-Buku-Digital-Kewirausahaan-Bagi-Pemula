@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.materi
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
