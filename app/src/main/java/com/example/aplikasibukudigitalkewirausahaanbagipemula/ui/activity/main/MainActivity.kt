@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOffShimmerMateri(){
         binding.apply {
+            smMateri.stopShimmer()
             smTitleTrendsMateri.visibility = View.GONE
             smViewAllMateri.visibility = View.GONE
             smMateri.visibility = View.GONE
@@ -197,6 +198,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOffShimmerVideo(){
         binding.apply {
+            smVideo.stopShimmer()
             smTitleTrendsVideo.visibility = View.GONE
             smViewAllVideo.visibility = View.GONE
             smVideo.visibility = View.GONE

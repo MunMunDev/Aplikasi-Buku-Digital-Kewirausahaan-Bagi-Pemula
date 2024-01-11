@@ -1,7 +1,9 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.materi
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,7 +11,9 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.SemuaMateriAdapter
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMateriBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.search.SearchViewModel
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +24,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MateriActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMateriBinding
+    private lateinit var kontrolNavigationDrawer: KontrolNavigationDrawer
     @Inject lateinit var loading: LoadingAlertDialog
     private val viewModel: MateriViewModel by viewModels()
     private lateinit var adapter: SemuaMateriAdapter
@@ -28,16 +33,16 @@ class MateriActivity : AppCompatActivity() {
         binding = ActivityMateriBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setButton()
+        setNavigationDrawer()
         fetchDataMateri()
         getDataMateri()
     }
 
-    private fun setButton() {
+    private fun setNavigationDrawer() {
         binding.apply {
-            btnBack.setOnClickListener {
-                finish()
-            }
+            kontrolNavigationDrawer = KontrolNavigationDrawer(this@MateriActivity)
+            kontrolNavigationDrawer.cekSebagai(navView)
+            kontrolNavigationDrawer.onClickItemNavigationDrawer(navView, drawerLayoutMain, ivDrawerView, this@MateriActivity)
         }
     }
 
@@ -57,11 +62,13 @@ class MateriActivity : AppCompatActivity() {
 
     private fun setFailureDataMateri(message: String) {
         Toast.makeText(this@MateriActivity, message, Toast.LENGTH_SHORT).show()
+        setStopShimmer()
         loading.alertDialogCancel()
     }
 
     private fun setSuccessDataMateri(data: ArrayList<MateriModel>) {
         loading.alertDialogCancel()
+        setStopShimmer()
         val sort = data.sortedWith(compareBy { it.namaMateri })
         val dataArrayList = arrayListOf<MateriModel>()
         dataArrayList.addAll(sort)
@@ -78,5 +85,20 @@ class MateriActivity : AppCompatActivity() {
             )
             rvMateri.adapter = adapter
         }
+    }
+
+    private fun setStopShimmer(){
+        binding.apply {
+            rvMateri.visibility = View.VISIBLE
+
+            smMateri.stopShimmer()
+            smMateri.visibility = View.GONE
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this@MateriActivity, MainActivity::class.java))
+        finish()
     }
 }
