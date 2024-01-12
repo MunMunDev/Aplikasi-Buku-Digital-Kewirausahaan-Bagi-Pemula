@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.video
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,23 +13,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MateriViewModel @Inject constructor(
+class VideoViewModel @Inject constructor(
     private val api: ApiService
-): ViewModel() {
-    private val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
+) : ViewModel() {
+    val _video = MutableLiveData<UIState<ArrayList<VideoModel>>>()
 
-    fun fetchDataMateri() {
+    fun fetchDataVideo(){
         viewModelScope.launch {
-            _materi.postValue(UIState.Loading)
+            _video.postValue(UIState.Loading)
             try {
-                val dataMateri = api.getMateri("")
-                _materi.postValue(UIState.Success(dataMateri))
-            } catch (ex: Exception) {
-                _materi.postValue(UIState.Failure("Error ${ex.message}"))
+                val dataVideo = api.getVideo("")
+                _video.postValue(UIState.Success(dataVideo))
+            } catch (ex: Exception){
+                _video.postValue(UIState.Failure("Error ${ex.message}"))
             }
         }
     }
 
-    fun getDataMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _materi
-
+    fun getDataVideo(): LiveData<UIState<ArrayList<VideoModel>>> = _video
 }

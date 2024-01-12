@@ -37,19 +37,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.user.VideoActivity"
+            android:name=".ui.activity.user.video.VideoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.MateriActivity"
+            android:name=".ui.activity.user.materi.MateriActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.SearchDataActivity"
+            android:name=".ui.activity.user.search.SearchDataActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.ReadPdfActivity"
+            android:name=".ui.activity.user.read_pdf.ReadPdfActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.MainActivity"
+            android:name=".ui.activity.user.main.MainActivity"
             android:exported="true" />
     </application>
 
