@@ -1,9 +1,11 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityAdminMainBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.AdminMateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 
 class AdminMainActivity : AppCompatActivity() {
@@ -29,7 +31,8 @@ class AdminMainActivity : AppCompatActivity() {
     private fun setButton() {
         binding.apply {
             cvMateri.setOnClickListener {
-
+                startActivity(Intent(this@AdminMainActivity, AdminMateriActivity::class.java))
+                finish()
             }
             cvVideo.setOnClickListener {
 
