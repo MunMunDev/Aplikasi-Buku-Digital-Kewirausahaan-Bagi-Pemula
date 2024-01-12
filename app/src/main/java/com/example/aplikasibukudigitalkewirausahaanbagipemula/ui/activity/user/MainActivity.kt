@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.main
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +13,6 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.PopulerVid
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMainBinding
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.materi.MateriActivity
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.search.SearchDataActivity
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.video.VideoActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState

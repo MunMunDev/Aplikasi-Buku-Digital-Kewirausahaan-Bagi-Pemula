@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.main.MainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.SharedPreferencesLogin
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -25,7 +26,7 @@ class SplashScreenActivity : AppCompatActivity() {
             if(sharedPreferencesLogin.getIdUser() == 0){
 //                startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
                 finish()
-                startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+                startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
             }
             else{
                 if(sharedPreferencesLogin.getSebagai() == "user"){

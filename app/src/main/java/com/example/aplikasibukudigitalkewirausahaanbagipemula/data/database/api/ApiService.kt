@@ -8,7 +8,19 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("buku-digital-kewirausahaan/api/get.php")
-    suspend fun getUser(@Query("get_user")getUser: String
+    suspend fun getAllUser(@Query("get_all_user")getAllUser: String
+    ): ArrayList<UsersModel>
+
+    @GET("buku-digital-kewirausahaan/api/get.php")
+    suspend fun getUser(@Query("get_user") getUser: String,
+                        @Query("username") username: String,
+                        @Query("password") password: String
+    ): ArrayList<UsersModel>
+
+    @GET("buku-digital-kewirausahaan/api/get.php")
+    suspend fun cekUser(@Query("cek_user") cekUser: String,
+                        @Query("username") username: String,
+                        @Query("password") password: String
     ): ArrayList<UsersModel>
 
     @GET("buku-digital-kewirausahaan/api/get.php")

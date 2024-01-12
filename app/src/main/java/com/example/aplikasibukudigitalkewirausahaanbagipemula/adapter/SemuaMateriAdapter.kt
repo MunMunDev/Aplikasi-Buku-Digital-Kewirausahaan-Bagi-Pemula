@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.read_pdf.ReadPdfActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.ReadPdfActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
 
 class SemuaMateriAdapter(private var listMateri: ArrayList<MateriModel>): RecyclerView.Adapter<SemuaMateriAdapter.ViewHolder>() {

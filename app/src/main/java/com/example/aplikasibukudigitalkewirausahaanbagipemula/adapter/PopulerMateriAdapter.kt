@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataPopulerBinding
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.read_pdf.ReadPdfActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.ReadPdfActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
 
 class PopulerMateriAdapter(private var listMateri: ArrayList<MateriModel>): RecyclerView.Adapter<PopulerMateriAdapter.ViewHolder>() {
