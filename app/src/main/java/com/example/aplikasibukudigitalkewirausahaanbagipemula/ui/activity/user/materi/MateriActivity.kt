@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.materi
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.SemuaMateriAdapter
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMateriBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState

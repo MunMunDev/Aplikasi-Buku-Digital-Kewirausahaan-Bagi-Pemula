@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.UsersModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityLoginBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.register.RegisterActivity
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.MainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.SharedPreferencesLogin
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
