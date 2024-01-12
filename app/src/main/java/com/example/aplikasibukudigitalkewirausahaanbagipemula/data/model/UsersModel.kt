@@ -9,9 +9,6 @@ class UsersModel {
     @SerializedName("nama")
     val nama: String? = null
 
-    @SerializedName("umur")
-    val umur: String? = null
-
     @SerializedName("nomor_hp")
     val nomorHp: String? = null
 
