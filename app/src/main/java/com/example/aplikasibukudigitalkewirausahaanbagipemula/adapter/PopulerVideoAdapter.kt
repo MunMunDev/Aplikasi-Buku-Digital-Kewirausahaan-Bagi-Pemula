@@ -36,8 +36,7 @@ class PopulerVideoAdapter(private var listVideo: ArrayList<VideoModel>): Recycle
             setImageFromYoutube(binding, itemView, dataMateri.urlVideo)
             binding.apply {
                 tvJudulMateri.text = dataMateri.namaVideo
-                var namaPenulis = ""
-                tvNamaPemateri.text = namaPenulis
+                tvNamaPemateri.text = "YouTube"
             }
             itemView.apply {
                 this.setOnClickListener{

@@ -1,9 +1,13 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.data.database.api
 
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.ResponseModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.UsersModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {
@@ -31,4 +35,16 @@ interface ApiService {
     suspend fun getVideo(@Query("get_all_video") getAllVideo: String
     ): ArrayList<VideoModel>
 
+
+    // POST
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun addUser(
+        @Field("add_user") addUser:String,
+        @Field("nama") nama:String,
+        @Field("nomor_hp") nomorHp:String,
+        @Field("username") username:String,
+        @Field("password") password:String,
+        @Field("sebagai") sebagai:String
+    ): ArrayList<ResponseModel>
 }

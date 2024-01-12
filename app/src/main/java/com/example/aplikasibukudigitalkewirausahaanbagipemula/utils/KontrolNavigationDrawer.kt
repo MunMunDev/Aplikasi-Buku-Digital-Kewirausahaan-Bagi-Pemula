@@ -2,12 +2,16 @@ package com.example.aplikasibukudigitalkewirausahaanbagipemula.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.MateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.VideoActivity
@@ -27,43 +31,43 @@ class KontrolNavigationDrawer(var context: Context) {
     @SuppressLint("ResourceAsColor")
     fun onClickItemNavigationDrawer(navigation: com.google.android.material.navigation.NavigationView, navigationLayout: DrawerLayout, igNavigation:ImageView, activity: Activity){
         navigation.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.userNavDrawerHome -> {
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                    activity.finish()
-                }
-                R.id.userNavDrawerMateri -> {
-                    val intent = Intent(context, MateriActivity::class.java)
-                    context.startActivity(intent)
-                    activity.finish()
-                }
-                R.id.userNavDrawerVideo -> {
-                    val intent = Intent(context, VideoActivity::class.java)
-                    context.startActivity(intent)
-                    activity.finish()
-                }
-            }
+//            when(it.itemId) {
+//                R.id.userNavDrawerHome -> {
+//                    val intent = Intent(context, MainActivity::class.java)
+//                    context.startActivity(intent)
+//                    activity.finish()
+//                }
+//                R.id.userNavDrawerMateri -> {
+//                    val intent = Intent(context, MateriActivity::class.java)
+//                    context.startActivity(intent)
+//                    activity.finish()
+//                }
+//                R.id.userNavDrawerVideo -> {
+//                    val intent = Intent(context, VideoActivity::class.java)
+//                    context.startActivity(intent)
+//                    activity.finish()
+//                }
+//            }
             if(sharedPreferences.getSebagai() == "user"){
                 when(it.itemId){
-//                    R.id.userNavDrawerHome ->{
-//                        val intent = Intent(context, MainActivity::class.java)
-//                        context.startActivity(intent)
-//                        activity.finish()
-//                    }
-//                    R.id.userNavDrawerRiwayatPembayaran ->{
-//                        val intent = Intent(context, RiwayatPembayaranActivity::class.java)
-//                        context.startActivity(intent)
-//                        activity.finish()
-//                    }
-//                    R.id.userNavDrawerAkun ->{
-//                        val intent = Intent(context, AkunActivity::class.java)
-//                        context.startActivity(intent)
-//                        activity.finish()
-//                    }
-//                    R.id.userBtnKeluar ->{
-//                        logout(activity)
-//                    }
+                    R.id.userNavDrawerHome -> {
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
+                    R.id.userNavDrawerMateri -> {
+                        val intent = Intent(context, MateriActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
+                    R.id.userNavDrawerVideo -> {
+                        val intent = Intent(context, VideoActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
+                    R.id.userBtnKeluar ->{
+                        logout(activity)
+                    }
                 }
             }
             else if(sharedPreferences.getSebagai() == "admin"){
@@ -110,6 +114,10 @@ class KontrolNavigationDrawer(var context: Context) {
     }
 
     fun logout(activity: Activity){
+        sharedPreferences.setLogin(0, "", "","", "","")
+        context.startActivity(Intent(context, LoginActivity::class.java))
+        activity.finish()
+
 //        val viewAlertDialog = View.inflate(context, R.layout.alert_dialog_logout, null)
 //        val btnLogout = viewAlertDialog.findViewById<Button>(R.id.btnLogout)
 //        val btnBatalLogout = viewAlertDialog.findViewById<Button>(R.id.btnBatalLogout)
@@ -120,8 +128,7 @@ class KontrolNavigationDrawer(var context: Context) {
 //        dialog.show()
 //
 //        btnLogout.setOnClickListener {
-//            sharedPreferences.setLogin(0, "", "","", "","", "","")
-////            sharedPreferences.setLogin(0, "","", "","", "","", "")
+//            sharedPreferences.setLogin(0, "", "","", "","")
 //            context.startActivity(Intent(context, LoginActivity::class.java))
 //            activity.finish()
 //        }
