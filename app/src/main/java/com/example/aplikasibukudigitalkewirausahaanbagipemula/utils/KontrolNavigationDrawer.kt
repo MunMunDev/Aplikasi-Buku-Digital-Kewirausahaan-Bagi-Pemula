@@ -11,6 +11,8 @@ import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.AdminMateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.materi.MateriActivity
@@ -72,34 +74,24 @@ class KontrolNavigationDrawer(var context: Context) {
             }
             else if(sharedPreferences.getSebagai() == "admin"){
                 when(it.itemId){
-//                    R.id.adminNavDrawerHome ->{
-//                        val intent = Intent(context, AdminMainActivity::class.java)
+                    R.id.adminNavDrawerHome -> {
+                        val intent = Intent(context, AdminMainActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
+                    R.id.adminNavDrawerMateri -> {
+                        val intent = Intent(context, AdminMateriActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
+                    R.id.adminNavDrawerVideo -> {
+//                        val intent = Intent(context, AdminVideoActivity::class.java)
 //                        context.startActivity(intent)
 //                        activity.finish()
-//                    }
-//                    R.id.adminNavDrawerPerumahan->{
-//                        val intent = Intent(context, AdminPerumahanActivity::class.java)
-//                        context.startActivity(intent)
-//                        activity.finish()
-//                    }
-//                    R.id.adminNavDrawerBiaya->{
-//                        val intent = Intent(context, AdminBiayaActivity::class.java)
-//                        context.startActivity(intent)
-//                        activity.finish()
-//                    }
-//                    R.id.adminNavDrawerPembayaran->{
-//                        val intent = Intent(context, AdminPembayaranActivity::class.java)
-//                        context.startActivity(intent)
-//                        activity.finish()
-//                    }
-//                    R.id.adminNavDrawerAkun ->{
-//                        val intent = Intent(context, AdminUsersActivity::class.java)
-//                        context.startActivity(intent)
-//                        activity.finish()
-//                    }
-//                    R.id.btnAdminKeluar ->{
-//                        logout(activity)
-//                    }
+                    }
+                    R.id.adminBtnKeluar ->{
+                        logout(activity)
+                    }
                 }
 
             }
