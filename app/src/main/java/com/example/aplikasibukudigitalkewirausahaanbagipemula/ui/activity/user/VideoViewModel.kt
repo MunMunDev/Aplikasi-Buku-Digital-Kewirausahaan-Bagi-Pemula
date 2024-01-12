@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.search
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,23 +13,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class VideoViewModel @Inject constructor(
     private val api: ApiService
-): ViewModel() {
-    val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
+) : ViewModel() {
     val _video = MutableLiveData<UIState<ArrayList<VideoModel>>>()
-
-    fun fetchDataMateri(){
-        viewModelScope.launch {
-            _materi.postValue(UIState.Loading)
-            try {
-                val dataMateri = api.getMateri("")
-                _materi.postValue(UIState.Success(dataMateri))
-            } catch (ex: Exception){
-                _materi.postValue(UIState.Failure("Error ${ex.message}"))
-            }
-        }
-    }
 
     fun fetchDataVideo(){
         viewModelScope.launch {
@@ -43,6 +30,5 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun getDataMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _materi
     fun getDataVideo(): LiveData<UIState<ArrayList<VideoModel>>> = _video
 }

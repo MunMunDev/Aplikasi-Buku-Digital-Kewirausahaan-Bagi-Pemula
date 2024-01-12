@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 class UsersModel {
     @SerializedName("id_user")
-    val id_user: String? = null
+    val idUser: String? = null
 
     @SerializedName("nama")
     val nama: String? = null
@@ -17,5 +17,8 @@ class UsersModel {
 
     @SerializedName("password")
     val password: String? = null
+
+    @SerializedName("sebagai")
+    val sebagai: String? = null
 
 }
