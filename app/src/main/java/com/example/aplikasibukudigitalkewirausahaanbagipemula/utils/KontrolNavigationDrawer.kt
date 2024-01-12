@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.materi.MateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.video.VideoActivity
