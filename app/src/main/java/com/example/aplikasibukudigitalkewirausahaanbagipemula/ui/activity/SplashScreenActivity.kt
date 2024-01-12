@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.MainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.SharedPreferencesLogin
 
 class SplashScreenActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,37 +13,36 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class SearchViewModel @Inject constructor(
     private val api: ApiService
 ): ViewModel() {
-    val _materiPopuler = MutableLiveData<UIState<ArrayList<MateriModel>>>()
-    val _videoPopuler = MutableLiveData<UIState<ArrayList<VideoModel>>>()
+    val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
+    val _video = MutableLiveData<UIState<ArrayList<VideoModel>>>()
 
-    fun fetchDataMateriPopuler(){
+    fun fetchDataMateri(){
         viewModelScope.launch {
-            _materiPopuler.postValue(UIState.Loading)
+            _materi.postValue(UIState.Loading)
             try {
                 val dataMateri = api.getMateri("")
-                _materiPopuler.postValue(UIState.Success(dataMateri))
+                _materi.postValue(UIState.Success(dataMateri))
             } catch (ex: Exception){
-                _materiPopuler.postValue(UIState.Failure("Error ${ex.message}"))
+                _materi.postValue(UIState.Failure("Error ${ex.message}"))
             }
         }
     }
 
-    fun fetchDataVideoPopuler(){
+    fun fetchDataVideo(){
         viewModelScope.launch {
-            _videoPopuler.postValue(UIState.Loading)
+            _video.postValue(UIState.Loading)
             try {
                 val dataVideo = api.getVideo("")
-                _videoPopuler.postValue(UIState.Success(dataVideo))
+                _video.postValue(UIState.Success(dataVideo))
             } catch (ex: Exception){
-                _videoPopuler.postValue(UIState.Failure("Error ${ex.message}"))
+                _video.postValue(UIState.Failure("Error ${ex.message}"))
             }
         }
     }
 
-    fun getDataMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _materiPopuler
-    fun getDataVideo(): LiveData<UIState<ArrayList<VideoModel>>> = _videoPopuler
-
+    fun getDataMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _materi
+    fun getDataVideo(): LiveData<UIState<ArrayList<VideoModel>>> = _video
 }
