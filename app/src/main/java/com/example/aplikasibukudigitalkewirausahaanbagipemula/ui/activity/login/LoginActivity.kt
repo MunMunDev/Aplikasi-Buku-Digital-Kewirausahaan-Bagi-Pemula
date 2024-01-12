@@ -13,10 +13,11 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.m
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.SharedPreferencesLogin
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-    private val TAG = "LoginActivityTAG"
     private lateinit var loginBinding: ActivityLoginBinding
     private lateinit var sharedPreferencesLogin: SharedPreferencesLogin
     @Inject lateinit var loading : LoadingAlertDialog
