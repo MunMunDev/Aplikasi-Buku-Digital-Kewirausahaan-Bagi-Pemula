@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.SharedPreferencesLogin
@@ -33,10 +34,10 @@ class SplashScreenActivity : AppCompatActivity() {
                     startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
                     finish()
                 }
-//                else if(sharedPreferencesLogin.getSebagai() == "admin"){
-//                    startActivity(Intent(this@SplashScreenActivity, AdminMainActivity::class.java))
-//                    finish()
-//                }
+                else if(sharedPreferencesLogin.getSebagai() == "admin"){
+                    startActivity(Intent(this@SplashScreenActivity, AdminMainActivity::class.java))
+                    finish()
+                }
             }
         }, 3000)
     }
