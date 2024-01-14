@@ -4,10 +4,13 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriM
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.ResponseModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.UsersModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
+import okhttp3.MultipartBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
@@ -46,5 +49,28 @@ interface ApiService {
         @Field("username") username:String,
         @Field("password") password:String,
         @Field("sebagai") sebagai:String
+    ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun adminTambahMateri(
+        @Field("nama_materi") namaMateri:String,
+        @Field("nama_penulis") namaPenulis:String,
+        @Part file: MultipartBody.Part,
+        @Field("lokasi_file") lokasiFile:String,
+        @Field("url_materi") urlMateri:String,
+        @Field("url_image") urlImage:String,
+        @Field("jumlah_pelihat") jumlahPelihat:String
+    ): ArrayList<ResponseModel>
+
+    @Multipart
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun adminUpdateMateri(
+        @Field("id_materi") idMateri:String,
+        @Field("nama_materi") namaMateri:String,
+        @Field("nama_penulis") namaPenulis:String,
+        @Part file: MultipartBody.Part,
+        @Field("jumlah_pelihat") jumlahPelihat:String
     ): ArrayList<ResponseModel>
 }
