@@ -100,6 +100,7 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu_user"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true"
+        android:background="@color/white"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
