@@ -9,6 +9,7 @@ import okhttp3.RequestBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -54,6 +55,32 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postUpdateUser(
+        @Field("update_akun") updateAkun:String,
+        @Field("id_user") idUser: String,
+        @Field("nama") nama:String,
+        @Field("nomor_hp") nomorHp:String,
+        @Field("username") username:String,
+        @Field("password") password:String,
+        @Field("username_lama") usernameLama: String
+    ): ArrayList<ResponseModel>
+
+//    @FormUrlEncoded
+//    @POST("iuran-kebersihan/api/post.php")
+//    suspend fun postUpdateUser(
+//        @Field("update_akun") update_akun: String,
+//        @Field("id_user") id_user: String,
+//        @Field("nama") nama: String,
+//        @Field("nomor_hp") nomor_hp: String,
+//        @Field("username") username: String,
+//        @Field("password") password: String,
+//        @Field("username_lama") usernameLama: String
+//    ): ArrayList<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @Multipart
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
     suspend fun adminTambahMateri(
         @Part("nama_materi") namaMateri: RequestBody,
         @Part("nama_penulis") namaPenulis: RequestBody,
@@ -64,6 +91,7 @@ interface ApiService {
         @Part("jumlah_pelihat") jumlahPelihat: RequestBody
     ): ArrayList<ResponseModel>
 
+    @Headers("Content-Type: application/json")
     @Multipart
     @FormUrlEncoded
     @POST("buku-digital-kewirausahaan/api/post.php")
