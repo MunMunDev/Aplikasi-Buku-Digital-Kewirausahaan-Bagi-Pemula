@@ -5,6 +5,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.Respons
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.UsersModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -54,13 +55,13 @@ interface ApiService {
     @FormUrlEncoded
     @POST("buku-digital-kewirausahaan/api/post.php")
     suspend fun adminTambahMateri(
-        @Field("nama_materi") namaMateri:String,
-        @Field("nama_penulis") namaPenulis:String,
+        @Part("nama_materi") namaMateri: RequestBody,
+        @Part("nama_penulis") namaPenulis: RequestBody,
         @Part file: MultipartBody.Part,
-        @Field("lokasi_file") lokasiFile:String,
-        @Field("url_materi") urlMateri:String,
-        @Field("url_image") urlImage:String,
-        @Field("jumlah_pelihat") jumlahPelihat:String
+        @Part("lokasi_file") lokasiFile: RequestBody,
+        @Part("url_materi") urlMateri: RequestBody,
+        @Part("url_image") urlImage: RequestBody,
+        @Part("jumlah_pelihat") jumlahPelihat: RequestBody
     ): ArrayList<ResponseModel>
 
     @Multipart
