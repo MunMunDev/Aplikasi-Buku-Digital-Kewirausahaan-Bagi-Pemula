@@ -14,6 +14,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.AdminMateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.akun.AkunActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.materi.MateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.video.VideoActivity
@@ -64,6 +65,11 @@ class KontrolNavigationDrawer(var context: Context) {
                     }
                     R.id.userNavDrawerVideo -> {
                         val intent = Intent(context, VideoActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
+                    R.id.userNavDrawerAkun -> {
+                        val intent = Intent(context, AkunActivity::class.java)
                         context.startActivity(intent)
                         activity.finish()
                     }

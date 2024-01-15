@@ -13,6 +13,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.PopulerVid
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMainBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.akun.AkunActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.materi.MateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.search.SearchDataActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.video.VideoActivity
@@ -51,12 +52,15 @@ class MainActivity : AppCompatActivity() {
             }
             btnMateri.setOnClickListener {
                 startActivity(Intent(this@MainActivity, MateriActivity::class.java))
+                finish()
             }
             btnVideo.setOnClickListener {
                 startActivity(Intent(this@MainActivity, VideoActivity::class.java))
+                finish()
             }
             btnAkun.setOnClickListener {
-
+                startActivity(Intent(this@MainActivity, AkunActivity::class.java))
+                finish()
             }
             tvViewAllMateri.setOnClickListener {
                 startActivity(Intent(this@MainActivity, MateriActivity::class.java))

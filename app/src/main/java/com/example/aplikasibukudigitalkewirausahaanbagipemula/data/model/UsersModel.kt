@@ -2,23 +2,22 @@ package com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model
 
 import com.google.gson.annotations.SerializedName
 
-class UsersModel {
+class UsersModel (
     @SerializedName("id_user")
-    val idUser: String? = null
+    var idUser: String? = null,
 
     @SerializedName("nama")
-    val nama: String? = null
+    var nama: String? = null,
 
     @SerializedName("nomor_hp")
-    val nomorHp: String? = null
+    var nomorHp: String? = null,
 
     @SerializedName("username")
-    val username: String? = null
+    var username: String? = null,
 
     @SerializedName("password")
-    val password: String? = null
+    var password: String? = null,
 
     @SerializedName("sebagai")
-    val sebagai: String? = null
-
-}
+    var sebagai: String? = null
+)
