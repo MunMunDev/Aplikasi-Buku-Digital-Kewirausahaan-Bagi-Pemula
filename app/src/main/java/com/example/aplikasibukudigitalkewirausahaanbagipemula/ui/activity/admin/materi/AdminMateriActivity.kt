@@ -1,18 +1,25 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.Settings
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
@@ -21,6 +28,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriM
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityAdminMateriBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogMateriBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KataAcak
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
@@ -41,6 +49,8 @@ class AdminMateriActivity : AppCompatActivity() {
     private lateinit var kontrolNavigationDrawer: KontrolNavigationDrawer
     private lateinit var adapter: AdminMateriAdapter
     private val viewModel: AdminMateriViewModel by viewModels()
+
+    private val TAG = "AdminMateriActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminMateriBinding.inflate(layoutInflater)
@@ -205,8 +215,31 @@ class AdminMateriActivity : AppCompatActivity() {
         dialogInputan.show()
 
         view.apply {
+            var file: MultipartBody.Part? = null
             etEditFile.setOnClickListener {
-                uploadPdf()
+                file = uploadPdf()
+
+                if(checkPermission()){
+                    Log.d(TAG, "dialogTambahData: ${Environment.getExternalStorageDirectory()}")
+                    try {
+//                        val file2 = File("${Environment.getExternalStorageDirectory()}")
+//                        file2.outputStream()
+//                        RequestBody.create(MediaType.parse("image/*"), file2)
+                        val inte = Intent(Intent.ACTION_GET_CONTENT).also {
+                            it.type = "application/pdf"
+                            val mineTypes = arrayOf("application/pdf")
+                            it.putExtra(Intent.EXTRA_MIME_TYPES, mineTypes)
+                            startActivityForResult(it, Constant.STORAGE_PERMISSION_CODE)
+                        }
+                        Log.d(TAG, "result: ${inte.data}")
+                    }catch (ex: Exception){
+                        Log.d(TAG, "error: ${ex.message}")
+                    }
+//                    val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+//                    var body = MultipartBody.Part.createFormData("gambar", file.name, requestFile)
+                } else{
+                    requestPermission()
+                }
             }
 
             btnSimpan.setOnClickListener {
@@ -219,7 +252,7 @@ class AdminMateriActivity : AppCompatActivity() {
                     etEditNamaMateri.error = "Tidak Boleh Kosong"
                     check = false
                 }
-                if(etEditFile.text.isEmpty()){
+                if(file==null){
                     etEditNamaMateri.error = "Tidak Boleh Kosong"
                     check = false
                 }
@@ -232,7 +265,7 @@ class AdminMateriActivity : AppCompatActivity() {
                     postTambahData(
                         etEditNamaMateri.text.toString().trim(),
                         etEditNamaPenulis.text.toString().trim(),
-                        etEditFile.text.toString().trim(),
+                        file!!,
                         etEditJumlahPelihat.text.toString().trim()
                     )
                 }
@@ -244,60 +277,132 @@ class AdminMateriActivity : AppCompatActivity() {
     }
 
     private fun uploadPdf(): MultipartBody.Part{
-        requestForStoragePermissions()
-
-        val file = File("/download")
-        val requestFile = RequestBody.create(MediaType.parse("image/jpg"), file)
-        val body = MultipartBody.Part.createFormData("files[0]", file.name, requestFile)
-
-        Toast.makeText(this@AdminMateriActivity, "hai", Toast.LENGTH_SHORT).show()
-
-
-        return body
-    }
-
-    private val STORAGE_PERMISSION_CODE = 23
-
-    private fun requestForStoragePermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            //Android is 11 (R) or above
-            Environment.isExternalStorageManager()
-        } else {
-            //Below android 11
-            val write =
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            val read =
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-            read == PackageManager.PERMISSION_GRANTED && write == PackageManager.PERMISSION_GRANTED
+        var body: MultipartBody.Part? = null
+        if(checkPermission()){
+            Toast.makeText(this@AdminMateriActivity, "berhasil", Toast.LENGTH_SHORT).show()
+            val file = File("${Environment.getExternalStorageDirectory()}")
+            val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            body = MultipartBody.Part.createFormData("gambar", file.name, requestFile)
+        } else{
+            requestPermission()
         }
 
-        //Android is 11 (R) or above
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            try {
-//                val intent = Intent()
-//                intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-//                val uri = Uri.fromParts("package", this.packageName, null)
-//                intent.data = uri
+//        val file = File("/download")
+//        val requestFile = RequestBody.create(MediaType.parse("image/jpg"), file)
+//        var body = MultipartBody.Part.createFormData("files[0]", file.name, requestFile)
 //
-//            } catch (e: Exception) {
-//                val intent = Intent()
-//                intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-////                storageActivityResultLauncher.launch(intent)
-//            }
-//        } else {
-//            //Below android 11
-//            ActivityCompat.requestPermissions(
-//                this, arrayOf<String>(
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                    Manifest.permission.READ_EXTERNAL_STORAGE
-//                ),
-//                STORAGE_PERMISSION_CODE
-//            )
-//        }
+//        Toast.makeText(this@AdminMateriActivity, "hai", Toast.LENGTH_SHORT).show()
+
+        return body!!
     }
 
-    private fun postTambahData(namaMateri: String, namaPenulis: String, file: String, jumlahPelihat: String) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        if (requestCode == Constant.STORAGE_PERMISSION_CODE){
+            if (grantResults.isNotEmpty()){
+                //check each permission if granted or not
+                val write = grantResults[0] == PackageManager.PERMISSION_GRANTED
+                val read = grantResults[1] == PackageManager.PERMISSION_GRANTED
+                if (write && read){
+                    //External Storage Permission granted
+                    Log.d(TAG, "onRequestPermissionsResult: External Storage Permission granted")
+                    Toast.makeText(this@AdminMateriActivity, "reques granted......", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    //External Storage Permission denied...
+                    Log.d(TAG, "onRequestPermissionsResult: External Storage Permission denied...")
+                    Toast.makeText(this@AdminMateriActivity, "External Storage Permission denied...", Toast.LENGTH_SHORT).show()
+                    requestPermission()
+                }
+            }
+        }
+    }
+    private fun checkPermission(): Boolean{
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            //Android is 11(R) or above
+            Environment.isExternalStorageManager()
+        }
+        else{
+            //Android is below 11(R)
+            val write = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val read = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+            write == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED
+        }
+    }
+    private val storageActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        Log.d(TAG, "storageActivityResultLauncher: ")
+        //here we will handle the result of our intent
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            //Android is 11(R) or above
+            if (Environment.isExternalStorageManager()){
+                //Manage External Storage Permission is granted
+                Log.d(TAG, "storageActivityResultLauncher: Manage External Storage Permission is granted")
+                Toast.makeText(this@AdminMateriActivity, "granted......", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                //Manage External Storage Permission is denied....
+                Log.d(TAG, "storageActivityResultLauncher: Manage External Storage Permission is denied....")
+                Toast.makeText(this@AdminMateriActivity, "Manage External Storage Permission is denied....", Toast.LENGTH_SHORT).show()
+            }
+        }
+        else{
+            //Android is below 11(R)
+        }
+    }
+
+    private fun requestPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            //Android is 11(R) or above
+            try {
+                Log.d(TAG, "requestPermission: try")
+                val intent = Intent()
+                intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+                val uri = Uri.fromParts("package", this.packageName, null)
+                intent.data = uri
+                storageActivityResultLauncher.launch(intent)
+            }
+            catch (e: Exception){
+                Log.e(TAG, "requestPermission: ", e)
+                val intent = Intent()
+                intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                storageActivityResultLauncher.launch(intent)
+            }
+        }
+        else{
+            //Android is below 11(R)
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+                Constant.STORAGE_PERMISSION_CODE
+            )
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
+
+    private fun postTambahData(namaMateri: String, namaPenulis: String, file: MultipartBody.Part, jumlahPelihat: String) {
+        viewModel.postTambahData(
+            namaMateri = convertStringToMultipartBody(namaMateri),
+            namaPenulis = convertStringToMultipartBody(namaPenulis),
+            file = file,
+            lokasiFile = convertStringToMultipartBody(Constant.MATERI_URL),
+            urlMateri = convertStringToMultipartBody(""),
+            urlImage = convertStringToMultipartBody(""),
+            jumlahPelihat = convertStringToMultipartBody(jumlahPelihat),
+
+        )
+    }
+
+    private fun convertStringToMultipartBody(data: String): RequestBody{
+        return RequestBody.create(MediaType.parse("multipart/form-data"), data)
     }
 
     private fun setStopShimmer(){
