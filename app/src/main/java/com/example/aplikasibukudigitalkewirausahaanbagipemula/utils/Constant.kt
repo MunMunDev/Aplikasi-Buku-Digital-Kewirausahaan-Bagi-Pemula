@@ -6,4 +6,6 @@ object Constant {
 
     const val MATERI_URL = "buku-digital-kewirausahaan/materi/"
     const val VIDEO_URL = "buku-digital-kewirausahaan/video/"
+
+    const val STORAGE_PERMISSION_CODE = 10
 }
