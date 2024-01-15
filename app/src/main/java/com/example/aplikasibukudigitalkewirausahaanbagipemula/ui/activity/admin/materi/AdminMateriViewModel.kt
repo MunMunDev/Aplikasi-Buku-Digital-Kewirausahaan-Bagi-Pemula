@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Field
 import javax.inject.Inject
 
@@ -36,8 +37,8 @@ class AdminMateriViewModel @Inject constructor(
     }
 
     fun postTambahData(
-        namaMateri: String, namaPenulis: String, file: MultipartBody.Part,
-        lokasiFile: String, urlMateri: String, urlImage: String, jumlahPelihat: String
+        namaMateri: RequestBody, namaPenulis: RequestBody, file: MultipartBody.Part,
+        lokasiFile: RequestBody, urlMateri: RequestBody, urlImage: RequestBody, jumlahPelihat: RequestBody
     ){
         viewModelScope.launch(Dispatchers.IO) {
             _postTambahMateri.postValue(UIState.Loading)
