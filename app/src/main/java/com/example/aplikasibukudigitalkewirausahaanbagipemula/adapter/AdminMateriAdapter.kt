@@ -1,35 +1,45 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataPopulerBinding
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_pdf.ReadPdfActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
 
-class PopulerMateriAdapter(private var listMateri: ArrayList<MateriModel>): RecyclerView.Adapter<PopulerMateriAdapter.ViewHolder>() {
-    class ViewHolder(val binding: ListDataPopulerBinding) : RecyclerView.ViewHolder(binding.root)
+class AdminMateriAdapter(
+    private var listMateri: ArrayList<MateriModel>,
+    private var click: ClickButton
+) : RecyclerView.Adapter<AdminMateriAdapter.ViewHolder>() {
+
+    var tempMateri = listMateri
+    fun searchData(kata: String){
+        val vKata = kata.toLowerCase().trim()
+        var data = listMateri.filter {
+            it.namaMateri!!.lowercase().trim().contains(vKata)
+        } as ArrayList
+        tempMateri = data
+        notifyDataSetChanged()
+    }
+
+    class ViewHolder(val binding: ListDataSemuaBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListDataPopulerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListDataSemuaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return if(listMateri.size>2){
-            3
-        } else{
-            listMateri.size
-        }
+        return tempMateri.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val dataMateri = listMateri[position]
+        val dataMateri = tempMateri[position]
         holder.apply {
             binding.apply {
                 Glide.with(itemView.context)
@@ -37,7 +47,6 @@ class PopulerMateriAdapter(private var listMateri: ArrayList<MateriModel>): Recy
                     .error(R.drawable.image_book)
                     .into(ivGambarMateri) // imageView mana yang akan diterapkan
 
-                tvJudulMateri.text = dataMateri.namaMateri
                 var namaPenulis = ""
                 namaPenulis = try {
                     val arrayNamaPenulis = dataMateri.namaPenulis!!.split(";-")
@@ -46,17 +55,22 @@ class PopulerMateriAdapter(private var listMateri: ArrayList<MateriModel>): Recy
                     dataMateri.namaPenulis!!
                 }
                 tvNamaPemateri.text = namaPenulis
+                tvJudulMateri.text = dataMateri.namaMateri
+                tvJumlahDilihat.text = "${dataMateri.jumlahPelihat}x Di Baca"
+                btnBuka.text = "Setting"
+                btnBuka.setOnClickListener {
+                    click.clickItem(dataMateri, it)
+                }
             }
             itemView.apply {
                 this.setOnClickListener{
-                    Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
-//                    context.startActivity(Intent(context, ReadPdfActivity::class.java))
-                    Intent(Intent.ACTION_VIEW).also {
-                        it.type = "application/pdf"
-                        context.startActivity(it)
-                    }
+
                 }
             }
         }
+    }
+
+    interface ClickButton{
+        fun clickItem(data: MateriModel, it:View)
     }
 }
