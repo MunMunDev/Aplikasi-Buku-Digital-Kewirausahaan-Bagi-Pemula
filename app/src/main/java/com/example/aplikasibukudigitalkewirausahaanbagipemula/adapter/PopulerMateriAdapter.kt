@@ -50,7 +50,11 @@ class PopulerMateriAdapter(private var listMateri: ArrayList<MateriModel>): Recy
             itemView.apply {
                 this.setOnClickListener{
                     Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
-                    context.startActivity(Intent(context, ReadPdfActivity::class.java))
+//                    context.startActivity(Intent(context, ReadPdfActivity::class.java))
+                    Intent(Intent.ACTION_VIEW).also {
+                        it.type = "application/pdf"
+                        context.startActivity(it)
+                    }
                 }
             }
         }
