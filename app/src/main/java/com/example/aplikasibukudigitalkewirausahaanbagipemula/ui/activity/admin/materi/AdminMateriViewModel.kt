@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Field
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,7 +42,7 @@ class AdminMateriViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _postTambahMateri.postValue(UIState.Loading)
             try {
-                val postTambahMateri = api.adminTambahMateri(namaMateri, namaPenulis, file, lokasiFile, urlMateri, urlImage, jumlahPelihat)
+                val postTambahMateri = api.postAdminTambahMateri(namaMateri, namaPenulis, file, lokasiFile, urlMateri, urlImage, jumlahPelihat)
                 _postTambahMateri.postValue(UIState.Success(postTambahMateri))
             } catch (ex: Exception){
                 _postTambahMateri.postValue(UIState.Failure("Error: ${ex.message}"))
@@ -55,7 +54,7 @@ class AdminMateriViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _postUpdateMateri.postValue(UIState.Loading)
             try {
-                val postTambahMateri = api.adminUpdateMateri(idMateri, namaMateri, namaPenulis, file, jumlahPelihat)
+                val postTambahMateri = api.postAdminUpdateMateri(idMateri, namaMateri, namaPenulis, file, jumlahPelihat)
                 _postUpdateMateri.postValue(UIState.Success(postTambahMateri))
             } catch (ex: Exception){
                 _postUpdateMateri.postValue(UIState.Failure("Error: ${ex.message}"))

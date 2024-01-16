@@ -99,7 +99,6 @@ class AkunActivity : AppCompatActivity() {
                 }
 
                 if(!cek){
-                    Toast.makeText(this@AkunActivity, "Update", Toast.LENGTH_SHORT).show()
                     tempUser = UsersModel(
                         sharedPreferences.getIdUser().toString(),
                         etEditNama.text.toString(),
@@ -144,7 +143,6 @@ class AkunActivity : AppCompatActivity() {
 
     private fun setFailureUpdateData(message: String) {
         Toast.makeText(this@AkunActivity, message, Toast.LENGTH_SHORT).show()
-        Log.d("AkunActivityTAG", "setFailureUpdateData: $message")
         loading.alertDialogCancel()
     }
 

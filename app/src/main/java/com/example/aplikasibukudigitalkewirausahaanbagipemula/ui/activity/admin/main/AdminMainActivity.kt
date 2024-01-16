@@ -3,9 +3,9 @@ package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityAdminMainBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.AdminMateriActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.video.AdminVideoActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 
 class AdminMainActivity : AppCompatActivity() {
@@ -35,7 +35,8 @@ class AdminMainActivity : AppCompatActivity() {
                 finish()
             }
             cvVideo.setOnClickListener {
-
+                startActivity(Intent(this@AdminMainActivity, AdminVideoActivity::class.java))
+                finish()
             }
             cvAkun.setOnClickListener {
 

@@ -24,6 +24,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.admin.video.AdminVideoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.user.akun.AkunActivity"
             android:exported="false" />
         <activity
