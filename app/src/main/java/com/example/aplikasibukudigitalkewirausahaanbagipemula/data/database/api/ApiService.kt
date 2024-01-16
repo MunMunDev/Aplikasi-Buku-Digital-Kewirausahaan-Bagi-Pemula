@@ -81,7 +81,7 @@ interface ApiService {
     @Multipart
     @FormUrlEncoded
     @POST("buku-digital-kewirausahaan/api/post.php")
-    suspend fun adminTambahMateri(
+    suspend fun postAdminTambahMateri(
         @Part("nama_materi") namaMateri: RequestBody,
         @Part("nama_penulis") namaPenulis: RequestBody,
         @Part file: MultipartBody.Part,
@@ -95,11 +95,37 @@ interface ApiService {
     @Multipart
     @FormUrlEncoded
     @POST("buku-digital-kewirausahaan/api/post.php")
-    suspend fun adminUpdateMateri(
+    suspend fun postAdminUpdateMateri(
         @Field("id_materi") idMateri:String,
         @Field("nama_materi") namaMateri:String,
         @Field("nama_penulis") namaPenulis:String,
         @Part file: MultipartBody.Part,
         @Field("jumlah_pelihat") jumlahPelihat:String
+    ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminTambahVideo(
+        @Field("tambah_video") tambahVideo:String,
+        @Field("nama_video") namaVideo: String,
+        @Field("url_video") urlVideo:String,
+        @Field("jumlah_pelihat") jumlahPelihat: String
+    ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminUpdateVideo(
+        @Field("update_video") updateVideo:String,
+        @Field("no_video") noVideo:String,
+        @Field("nama_video") namaVideo: String,
+        @Field("url_video") urlVideo:String,
+        @Field("jumlah_pelihat") jumlahPelihat: String
+    ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminHapusVideo(
+        @Field("hapus_video") hapusVideo:String,
+        @Field("no_video") noVideo:String
     ): ArrayList<ResponseModel>
 }
