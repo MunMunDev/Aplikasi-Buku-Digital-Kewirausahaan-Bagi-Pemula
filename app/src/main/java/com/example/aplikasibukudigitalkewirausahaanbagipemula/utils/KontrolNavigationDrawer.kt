@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.AdminMateriActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.video.AdminVideoActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.akun.AkunActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
@@ -34,23 +35,6 @@ class KontrolNavigationDrawer(var context: Context) {
     @SuppressLint("ResourceAsColor")
     fun onClickItemNavigationDrawer(navigation: com.google.android.material.navigation.NavigationView, navigationLayout: DrawerLayout, igNavigation:ImageView, activity: Activity){
         navigation.setNavigationItemSelectedListener {
-//            when(it.itemId) {
-//                R.id.userNavDrawerHome -> {
-//                    val intent = Intent(context, MainActivity::class.java)
-//                    context.startActivity(intent)
-//                    activity.finish()
-//                }
-//                R.id.userNavDrawerMateri -> {
-//                    val intent = Intent(context, MateriActivity::class.java)
-//                    context.startActivity(intent)
-//                    activity.finish()
-//                }
-//                R.id.userNavDrawerVideo -> {
-//                    val intent = Intent(context, VideoActivity::class.java)
-//                    context.startActivity(intent)
-//                    activity.finish()
-//                }
-//            }
             if(sharedPreferences.getSebagai() == "user"){
                 when(it.itemId){
                     R.id.userNavDrawerHome -> {
@@ -91,9 +75,9 @@ class KontrolNavigationDrawer(var context: Context) {
                         activity.finish()
                     }
                     R.id.adminNavDrawerVideo -> {
-//                        val intent = Intent(context, AdminVideoActivity::class.java)
-//                        context.startActivity(intent)
-//                        activity.finish()
+                        val intent = Intent(context, AdminVideoActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
                     }
                     R.id.adminBtnKeluar ->{
                         logout(activity)
