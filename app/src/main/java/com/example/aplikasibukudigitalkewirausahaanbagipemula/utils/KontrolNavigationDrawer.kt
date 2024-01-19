@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.akun.AdminSemuaAkunActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.AdminMateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.video.AdminVideoActivity
@@ -76,6 +77,11 @@ class KontrolNavigationDrawer(var context: Context) {
                     }
                     R.id.adminNavDrawerVideo -> {
                         val intent = Intent(context, AdminVideoActivity::class.java)
+                        context.startActivity(intent)
+                        activity.finish()
+                    }
+                    R.id.adminNavDrawerAkun -> {
+                        val intent = Intent(context, AdminSemuaAkunActivity::class.java)
                         context.startActivity(intent)
                         activity.finish()
                     }

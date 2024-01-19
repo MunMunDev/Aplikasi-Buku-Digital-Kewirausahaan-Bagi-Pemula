@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityAdminMainBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.akun.AdminSemuaAkunActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.AdminMateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.video.AdminVideoActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
@@ -39,7 +40,8 @@ class AdminMainActivity : AppCompatActivity() {
                 finish()
             }
             cvAkun.setOnClickListener {
-
+                startActivity(Intent(this@AdminMainActivity, AdminSemuaAkunActivity::class.java))
+                finish()
             }
         }
     }
