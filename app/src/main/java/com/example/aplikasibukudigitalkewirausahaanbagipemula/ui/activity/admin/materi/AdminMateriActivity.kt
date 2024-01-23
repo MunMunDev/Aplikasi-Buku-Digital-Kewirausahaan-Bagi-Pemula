@@ -1,21 +1,21 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi
 
 import android.Manifest
-import android.content.Context
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +25,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.AdminMateriAdapter
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.ResponseModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityAdminMateriBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogKonfirmasiBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogMateriBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
@@ -34,10 +36,10 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavig
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 
@@ -49,6 +51,10 @@ class AdminMateriActivity : AppCompatActivity() {
     private lateinit var kontrolNavigationDrawer: KontrolNavigationDrawer
     private lateinit var adapter: AdminMateriAdapter
     private val viewModel: AdminMateriViewModel by viewModels()
+    private var tempAlertDialog: AlertDialog? = null
+    private var tempView: AlertDialogMateriBinding? = null
+    private var filePdf: MultipartBody.Part? = null
+    private var fileImage: MultipartBody.Part? = null
 
     private val TAG = "AdminMateriActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +67,9 @@ class AdminMateriActivity : AppCompatActivity() {
 
         setKontrolNavigationDrawer()
         setButton()
+        getPostTambahData()
+        getUpdateMateri()
+        getHapusMateri()
     }
 
     private fun setKontrolNavigationDrawer() {
@@ -132,7 +141,7 @@ class AdminMateriActivity : AppCompatActivity() {
                         return true
                     }
                     R.id.hapus -> {
-
+                        setDialogHapusMateri(data)
                         return true
                     }
                 }
@@ -141,6 +150,66 @@ class AdminMateriActivity : AppCompatActivity() {
 
         })
         popupMenu.show()
+    }
+
+    private fun setDialogHapusMateri(data: MateriModel) {
+        val view = AlertDialogKonfirmasiBinding.inflate(layoutInflater)
+
+        val alertDialog = AlertDialog.Builder(this@AdminMateriActivity)
+        alertDialog.setView(view.root)
+            .setCancelable(false)
+        val dialogInputan = alertDialog.create()
+        dialogInputan.show()
+
+        tempAlertDialog = dialogInputan
+
+        view.apply {
+            tvTitleKonfirmasi.text = "Yakin Hapus Materi?"
+            tvBodyKonfirmasi.text = "Materi Berjudul ${data.namaMateri}"
+
+            btnKonfirmasi.setOnClickListener {
+                postHapusMateri(data.noMateri!!)
+            }
+            btnBatal.setOnClickListener {
+                dialogInputan.dismiss()
+                tempAlertDialog = null
+            }
+        }
+    }
+
+    private fun postHapusMateri(noMateri: String) {
+        viewModel.postHapusMateri(noMateri)
+    }
+
+    private fun getHapusMateri(){
+        viewModel.getResponseHapusMateri().observe(this@AdminMateriActivity){result->
+            when(result){
+                is UIState.Loading-> loading.alertDialogLoading(this@AdminMateriActivity)
+                is UIState.Failure-> setFailureHapusMateri(result.message)
+                is UIState.Success-> setSuccessHapusMateri(result.data)
+            }
+        }
+    }
+
+    private fun setSuccessHapusMateri(data: ArrayList<ResponseModel>) {
+        if(data.isNotEmpty()){
+            if(data[0].status == "0"){
+                Toast.makeText(this@AdminMateriActivity, "Berhasil Hapus", Toast.LENGTH_SHORT).show()
+                fetchDataMateri()
+                tempAlertDialog!!.dismiss()
+                tempAlertDialog = null
+            } else{
+                Toast.makeText(this@AdminMateriActivity, data[0].message_response, Toast.LENGTH_SHORT).show()
+            }
+        } else{
+            Toast.makeText(this@AdminMateriActivity, "Gagal", Toast.LENGTH_SHORT).show()
+        }
+        loading.alertDialogCancel()
+    }
+
+    private fun setFailureHapusMateri(message: String) {
+        Toast.makeText(this@AdminMateriActivity, message, Toast.LENGTH_SHORT).show()
+        loading.alertDialogCancel()
     }
 
     private fun setDialogEditMateri(data: MateriModel) {
@@ -152,11 +221,30 @@ class AdminMateriActivity : AppCompatActivity() {
         val dialogInputan = alertDialog.create()
         dialogInputan.show()
 
+        tempAlertDialog = dialogInputan
+        tempView = view
+
         view.apply {
             tVTitle.text = "Update Materi"
             etEditNamaMateri.setText(data.namaMateri)
             etEditNamaPenulis.setText(data.namaPenulis)
             etEditJumlahPelihat.setText(data.jumlahPelihat)
+
+            etEditFile.setOnClickListener {
+                if(checkPermission()){
+                    pickPdfFile()
+                } else{
+                    requestPermission()
+                }
+            }
+
+            etEditImage.setOnClickListener {
+                if(checkPermission()){
+                    pickImageFile()
+                } else{
+                    requestPermission()
+                }
+            }
 
             btnSimpan.setOnClickListener {
                 var check = true
@@ -165,36 +253,181 @@ class AdminMateriActivity : AppCompatActivity() {
                     check = false
                 }
                 if(etEditNamaPenulis.text.isEmpty()){
-                    etEditNamaMateri.error = "Tidak Boleh Kosong"
-                    check = false
-                }
-                if(etEditFile.text.isEmpty()){
-                    etEditNamaMateri.error = "Tidak Boleh Kosong"
+                    etEditNamaPenulis.error = "Tidak Boleh Kosong"
                     check = false
                 }
                 if(etEditJumlahPelihat.text.isEmpty()){
-                    etEditNamaMateri.error = "Tidak Boleh Kosong"
+                    etEditJumlahPelihat.error = "Tidak Boleh Kosong"
                     check = false
                 }
 
                 if(check){
-                    postUpdateData(
-                        data.idMateri!!,
-                        etEditNamaMateri.text.toString().trim(),
-                        etEditNamaPenulis.text.toString().trim(),
-                        etEditFile.text.toString().trim(),
-                        etEditJumlahPelihat.text.toString().trim()
-                    )
+                    tempAlertDialog = dialogInputan
+                    Toast.makeText(this@AdminMateriActivity, "update", Toast.LENGTH_SHORT).show()
+                    if(
+                        etEditFile.text.toString().trim() == resources.getString(R.string.ket_klik_file) &&
+                        etEditImage.text.toString().trim() == resources.getString(R.string.ket_klik_file)
+                    ){
+                        postUpdateDataNoImageAndPdf(
+                            data.noMateri!!,
+                            data.idMateri!!,
+                            etEditNamaMateri.text.toString().trim(),
+                            etEditNamaPenulis.text.toString().trim(),
+                            etEditFile.text.toString().trim(),
+                            etEditJumlahPelihat.text.toString().trim()
+                        )
+                    } else if(
+                        etEditImage.text.toString().trim() == resources.getString(R.string.ket_klik_file)
+                    ){
+                        postUpdateDataNoImage(
+                            data.noMateri!!,
+                            data.idMateri!!,
+                            etEditNamaMateri.text.toString().trim(),
+                            etEditNamaPenulis.text.toString().trim(),
+                            filePdf!!,
+                            etEditFile.text.toString().trim(),
+                            etEditJumlahPelihat.text.toString().trim()
+                        )
+                    } else if(
+                        etEditFile.text.toString().trim() == resources.getString(R.string.ket_klik_file)
+                    ){
+                        postUpdateDataNoPdf(
+                            data.noMateri!!,
+                            data.idMateri!!,
+                            etEditNamaMateri.text.toString().trim(),
+                            etEditNamaPenulis.text.toString().trim(),
+                            fileImage!!,
+                            etEditFile.text.toString().trim(),
+                            etEditJumlahPelihat.text.toString().trim()
+                        )
+                    } else{
+                        postUpdateData(
+                            data.noMateri!!,
+                            data.idMateri!!,
+                            etEditNamaMateri.text.toString().trim(),
+                            etEditNamaPenulis.text.toString().trim(),
+                            filePdf!!,
+                            fileImage!!,
+                            etEditFile.text.toString().trim(),
+                            etEditJumlahPelihat.text.toString().trim()
+                        )
+                    }
+
                 }
             }
             btnBatal.setOnClickListener {
                 dialogInputan.dismiss()
+                tempAlertDialog = null
+                tempView = null
+                filePdf = null
+                fileImage = null
             }
         }
     }
 
-    private fun postUpdateData(idMateri:String, namaMateri: String, namaPenulis: String, file: String, jumlahPelihat: String) {
+    private fun postUpdateData(
+        noMateri: String, idMateri: String, namaMateri: String, namaPenulis: String, filePdf: MultipartBody.Part,
+        fileImage: MultipartBody.Part, urlMateri: String, jumlahPelihat: String
+    ) {
+        viewModel.postUpdatehData(
+            post = convertStringToMultipartBody("update_materi"),
+            noMateri = convertStringToMultipartBody(noMateri),
+            idMateri = convertStringToMultipartBody(idMateri),
+            namaMateri = convertStringToMultipartBody(namaMateri),
+            namaPenulis = convertStringToMultipartBody(namaPenulis),
+            filePdf = filePdf,
+            fileImage = fileImage,
+            lokasiFile = convertStringToMultipartBody(Constant.MATERI_URL),
+            urlMateri = convertStringToMultipartBody(urlMateri),
+            urlImage = convertStringToMultipartBody(""),
+            jumlahPelihat = convertStringToMultipartBody(jumlahPelihat),
+        )
+    }
 
+    private fun postUpdateDataNoImage(
+        noMateri: String, idMateri: String, namaMateri: String, namaPenulis: String,
+        filePdf: MultipartBody.Part,urlMateri: String, jumlahPelihat: String
+    ) {
+        viewModel.postUpdatehDataNoImage(
+            post = convertStringToMultipartBody("update_materi"),
+            noMateri = convertStringToMultipartBody(noMateri),
+            idMateri = convertStringToMultipartBody(idMateri),
+            namaMateri = convertStringToMultipartBody(namaMateri),
+            namaPenulis = convertStringToMultipartBody(namaPenulis),
+            filePdf = filePdf,
+            lokasiFile = convertStringToMultipartBody(Constant.MATERI_URL),
+            urlMateri = convertStringToMultipartBody(urlMateri),
+            urlImage = convertStringToMultipartBody(""),
+            jumlahPelihat = convertStringToMultipartBody(jumlahPelihat),
+        )
+    }
+
+    private fun postUpdateDataNoPdf(
+        noMateri: String, idMateri: String, namaMateri: String, namaPenulis: String,
+        fileImage: MultipartBody.Part, urlMateri: String, jumlahPelihat: String
+    ) {
+        viewModel.postUpdatehDataNoPdf(
+            post = convertStringToMultipartBody("update_materi"),
+            noMateri = convertStringToMultipartBody(noMateri),
+            idMateri = convertStringToMultipartBody(idMateri),
+            namaMateri = convertStringToMultipartBody(namaMateri),
+            namaPenulis = convertStringToMultipartBody(namaPenulis),
+            fileImage = fileImage,
+            lokasiFile = convertStringToMultipartBody(Constant.MATERI_URL),
+            urlMateri = convertStringToMultipartBody(urlMateri),
+            urlImage = convertStringToMultipartBody(""),
+            jumlahPelihat = convertStringToMultipartBody(jumlahPelihat),
+        )
+    }
+
+    private fun postUpdateDataNoImageAndPdf(
+        noMateri: String, idMateri: String, namaMateri: String, namaPenulis: String,
+        urlMateri: String, jumlahPelihat: String
+    ) {
+        viewModel.postUpdatehDataNoImageAndPdf(
+            post = convertStringToMultipartBody("update_materi"),
+            noMateri = convertStringToMultipartBody(noMateri),
+            idMateri = convertStringToMultipartBody(idMateri),
+            namaMateri = convertStringToMultipartBody(namaMateri),
+            namaPenulis = convertStringToMultipartBody(namaPenulis),
+            lokasiFile = convertStringToMultipartBody(Constant.MATERI_URL),
+            urlMateri = convertStringToMultipartBody(urlMateri),
+            urlImage = convertStringToMultipartBody(""),
+            jumlahPelihat = convertStringToMultipartBody(jumlahPelihat)
+        )
+    }
+    
+    private fun getUpdateMateri(){
+        viewModel.getResponseUpdateMateri().observe(this@AdminMateriActivity){result->
+            when(result){
+                is UIState.Loading-> loading.alertDialogLoading(this@AdminMateriActivity)
+                is UIState.Success-> setSuccessUpdateMateri(result.data)
+                is UIState.Failure-> setFailureUpdateMateri(result.message)
+            }
+        }
+    }
+
+    private fun setSuccessUpdateMateri(data: ArrayList<ResponseModel>) {
+        if(data.isNotEmpty()){
+            if(data[0].status=="0"){
+                Toast.makeText(this@AdminMateriActivity, "Berhasil Update Materi", Toast.LENGTH_SHORT).show()
+                tempAlertDialog!!.dismiss()
+                tempAlertDialog = null
+                tempView = null
+                filePdf = null
+                fileImage = null
+
+                fetchDataMateri()
+            } else{
+                Toast.makeText(this@AdminMateriActivity, data[0].message_response, Toast.LENGTH_SHORT).show()
+            }
+        }
+        loading.alertDialogCancel()
+    }
+
+    private fun setFailureUpdateMateri(message: String) {
+        Toast.makeText(this@AdminMateriActivity, message, Toast.LENGTH_SHORT).show()
+        loading.alertDialogCancel()
     }
 
     private fun setButton() {
@@ -214,114 +447,174 @@ class AdminMateriActivity : AppCompatActivity() {
         val dialogInputan = alertDialog.create()
         dialogInputan.show()
 
-        view.apply {
-            var file: MultipartBody.Part? = null
-            etEditFile.setOnClickListener {
-                file = uploadPdf()
+        tempView = view
+        tempAlertDialog = dialogInputan
 
+        view.apply {
+            etEditFile.setOnClickListener {
                 if(checkPermission()){
-                    Log.d(TAG, "dialogTambahData: ${Environment.getExternalStorageDirectory()}")
-                    try {
-//                        val file2 = File("${Environment.getExternalStorageDirectory()}")
-//                        file2.outputStream()
-//                        RequestBody.create(MediaType.parse("image/*"), file2)
-                        val inte = Intent(Intent.ACTION_GET_CONTENT).also {
-                            it.type = "application/pdf"
-                            val mineTypes = arrayOf("application/pdf")
-                            it.putExtra(Intent.EXTRA_MIME_TYPES, mineTypes)
-                            startActivityForResult(it, Constant.STORAGE_PERMISSION_CODE)
-                        }
-                        Log.d(TAG, "result: ${inte.data}")
-                    }catch (ex: Exception){
-                        Log.d(TAG, "error: ${ex.message}")
-                    }
-//                    val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-//                    var body = MultipartBody.Part.createFormData("gambar", file.name, requestFile)
+                    pickPdfFile()
+                } else{
+                    requestPermission()
+                }
+            }
+
+            etEditImage.setOnClickListener {
+                if(checkPermission()){
+                    pickImageFile()
                 } else{
                     requestPermission()
                 }
             }
 
             btnSimpan.setOnClickListener {
+
                 var check = true
                 if(etEditNamaMateri.text.isEmpty()){
                     etEditNamaMateri.error = "Tidak Boleh Kosong"
                     check = false
                 }
                 if(etEditNamaPenulis.text.isEmpty()){
-                    etEditNamaMateri.error = "Tidak Boleh Kosong"
-                    check = false
-                }
-                if(file==null){
-                    etEditNamaMateri.error = "Tidak Boleh Kosong"
+                    etEditNamaPenulis.error = "Tidak Boleh Kosong"
                     check = false
                 }
                 if(etEditJumlahPelihat.text.isEmpty()){
-                    etEditNamaMateri.error = "Tidak Boleh Kosong"
+                    etEditJumlahPelihat.error = "Tidak Boleh Kosong"
+                    check = false
+                }
+                if(etEditFile.text.toString().trim()==resources.getString(R.string.ket_klik_file)){
+                    Toast.makeText(this@AdminMateriActivity, "upload PDF", Toast.LENGTH_SHORT).show()
+                    check = false
+                }
+                if(etEditImage.text.toString().trim()==resources.getString(R.string.ket_klik_file)){
+                    Toast.makeText(this@AdminMateriActivity, "Upload Image", Toast.LENGTH_SHORT).show()
                     check = false
                 }
 
                 if(check){
+                    tempAlertDialog = dialogInputan
                     postTambahData(
+                        kataAcak.getHurufDanAngka().trim(),
                         etEditNamaMateri.text.toString().trim(),
                         etEditNamaPenulis.text.toString().trim(),
-                        file!!,
+                        filePdf!!,
+                        fileImage!!,
+                        etEditFile.text.toString().trim(),
                         etEditJumlahPelihat.text.toString().trim()
                     )
                 }
             }
             btnBatal.setOnClickListener {
                 dialogInputan.dismiss()
+                tempAlertDialog = null
+                tempView = null
+                filePdf = null
+                fileImage = null
             }
         }
     }
 
-    private fun uploadPdf(): MultipartBody.Part{
-        var body: MultipartBody.Part? = null
-        if(checkPermission()){
-            Toast.makeText(this@AdminMateriActivity, "berhasil", Toast.LENGTH_SHORT).show()
-            val file = File("${Environment.getExternalStorageDirectory()}")
-            val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-            body = MultipartBody.Part.createFormData("gambar", file.name, requestFile)
+    private fun requestPermission(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            if (Environment.isExternalStorageManager()) {
+                startActivity(Intent(this, AdminMateriActivity::class.java))
+            } else { //request for the permission
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                val uri = Uri.fromParts("package", packageName, null)
+                intent.data = uri
+                startActivity(intent)
+            }
         } else{
-            requestPermission()
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+                Constant.STORAGE_PERMISSION_CODE
+            )
         }
-
-//        val file = File("/download")
-//        val requestFile = RequestBody.create(MediaType.parse("image/jpg"), file)
-//        var body = MultipartBody.Part.createFormData("files[0]", file.name, requestFile)
-//
-//        Toast.makeText(this@AdminMateriActivity, "hai", Toast.LENGTH_SHORT).show()
-
-        return body!!
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    private fun pickPdfFile() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+//            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/pdf"
+        }
 
-        if (requestCode == Constant.STORAGE_PERMISSION_CODE){
-            if (grantResults.isNotEmpty()){
-                //check each permission if granted or not
-                val write = grantResults[0] == PackageManager.PERMISSION_GRANTED
-                val read = grantResults[1] == PackageManager.PERMISSION_GRANTED
-                if (write && read){
-                    //External Storage Permission granted
-                    Log.d(TAG, "onRequestPermissionsResult: External Storage Permission granted")
-                    Toast.makeText(this@AdminMateriActivity, "reques granted......", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    //External Storage Permission denied...
-                    Log.d(TAG, "onRequestPermissionsResult: External Storage Permission denied...")
-                    Toast.makeText(this@AdminMateriActivity, "External Storage Permission denied...", Toast.LENGTH_SHORT).show()
-                    requestPermission()
-                }
+        startActivityForResult(intent, Constant.PDF_CODE)
+    }
+
+    private fun pickImageFile() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            type = "image/*"
+        }
+
+        startActivityForResult(intent, Constant.IMAGE_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == Constant.PDF_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            val fileUri = data.data!!
+            // Mendapatkan URI file PDF yang dipilih
+
+            val namePdf = getNameFile(fileUri)
+
+            tempView?.let {
+                it.etEditFile.text = namePdf
+            }
+
+            // Mengirim file PDF ke website menggunakan Retrofit
+            filePdf = uploadImageToStorage(fileUri, namePdf, "materi_pdf")
+        }
+
+        if (requestCode == Constant.IMAGE_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            // Mendapatkan URI file PDF yang dipilih
+            val fileUri = data.data!!
+
+            val nameImage = getNameFile(fileUri)
+
+            tempView?.let {
+                it.etEditImage.text = nameImage
+            }
+
+            // Mengirim file PDF ke website menggunakan Retrofit
+            fileImage = uploadImageToStorage(fileUri, nameImage, "materi_image")
+        }
+    }
+
+    private fun getNameFile(uri: Uri): String {
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        val nameIndex = cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        cursor?.moveToFirst()
+        val name = cursor?.getString(nameIndex!!)
+        cursor?.close()
+        return name!!
+    }
+
+    @SuppressLint("Recycle")
+    private fun uploadImageToStorage(pdfUri: Uri?, pdfFileName: String, nameAPI:String):MultipartBody.Part? {
+        var pdfPart : MultipartBody.Part? = null
+        pdfUri?.let {
+            val file = contentResolver.openInputStream(pdfUri)?.readBytes()
+
+            if (file != null) {
+//                // Membuat objek RequestBody dari file PDF
+//                val requestFile = file.toRequestBody("application/pdf".toMediaTypeOrNull())
+//                // Membuat objek MultipartBody.Part untuk file PDF
+//                pdfPart = MultipartBody.Part.createFormData("materi_pdf", pdfFileName, requestFile)
+
+                pdfPart = convertFileToMultipartBody(file, pdfFileName, nameAPI)
             }
         }
+        return pdfPart
     }
+
+    private fun convertFileToMultipartBody(file: ByteArray, pdfFileName: String, nameAPI:String):MultipartBody.Part?{
+        val requestFile = file.toRequestBody("application/pdf".toMediaTypeOrNull())
+        val filePart = MultipartBody.Part.createFormData(nameAPI, pdfFileName, requestFile)
+
+        return filePart
+    }
+
     private fun checkPermission(): Boolean{
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
             //Android is 11(R) or above
@@ -334,75 +627,63 @@ class AdminMateriActivity : AppCompatActivity() {
             write == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED
         }
     }
-    private val storageActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        Log.d(TAG, "storageActivityResultLauncher: ")
-        //here we will handle the result of our intent
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-            //Android is 11(R) or above
-            if (Environment.isExternalStorageManager()){
-                //Manage External Storage Permission is granted
-                Log.d(TAG, "storageActivityResultLauncher: Manage External Storage Permission is granted")
-                Toast.makeText(this@AdminMateriActivity, "granted......", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                //Manage External Storage Permission is denied....
-                Log.d(TAG, "storageActivityResultLauncher: Manage External Storage Permission is denied....")
-                Toast.makeText(this@AdminMateriActivity, "Manage External Storage Permission is denied....", Toast.LENGTH_SHORT).show()
-            }
-        }
-        else{
-            //Android is below 11(R)
-        }
-    }
 
-    private fun requestPermission(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-            //Android is 11(R) or above
-            try {
-                Log.d(TAG, "requestPermission: try")
-                val intent = Intent()
-                intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-                val uri = Uri.fromParts("package", this.packageName, null)
-                intent.data = uri
-                storageActivityResultLauncher.launch(intent)
-            }
-            catch (e: Exception){
-                Log.e(TAG, "requestPermission: ", e)
-                val intent = Intent()
-                intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-                storageActivityResultLauncher.launch(intent)
-            }
-        }
-        else{
-            //Android is below 11(R)
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
-                Constant.STORAGE_PERMISSION_CODE
-            )
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-    }
-
-
-    private fun postTambahData(namaMateri: String, namaPenulis: String, file: MultipartBody.Part, jumlahPelihat: String) {
+    private fun postTambahData(
+        idMateri: String, namaMateri: String, namaPenulis: String, filePdf: MultipartBody.Part,
+        fileImage: MultipartBody.Part, urlMateri: String, jumlahPelihat: String
+    ) {
         viewModel.postTambahData(
+            post = convertStringToMultipartBody("tambah_materi"),
+            idMateri = convertStringToMultipartBody(idMateri),
             namaMateri = convertStringToMultipartBody(namaMateri),
             namaPenulis = convertStringToMultipartBody(namaPenulis),
-            file = file,
+            filePdf = filePdf,
+            fileImage = fileImage,
             lokasiFile = convertStringToMultipartBody(Constant.MATERI_URL),
-            urlMateri = convertStringToMultipartBody(""),
+            urlMateri = convertStringToMultipartBody(urlMateri),
             urlImage = convertStringToMultipartBody(""),
             jumlahPelihat = convertStringToMultipartBody(jumlahPelihat),
-
         )
     }
 
+    private fun getPostTambahData(){
+        viewModel.getResponseTambahMateri().observe(this@AdminMateriActivity){result->
+            when(result){
+                is UIState.Loading-> loading.alertDialogLoading(this@AdminMateriActivity)
+                is UIState.Failure-> setFailureTambahData(result.message)
+                is UIState.Success-> setSuccessTambahData(result.data)
+            }
+        }
+    }
+
+    private fun setSuccessTambahData(data: java.util.ArrayList<ResponseModel>) {
+        loading.alertDialogCancel()
+
+        if(data.isNotEmpty()){
+            if(data[0].status=="0"){
+                Toast.makeText(this@AdminMateriActivity, "Berhasil Tambah", Toast.LENGTH_SHORT).show()
+                tempAlertDialog!!.dismiss()
+                tempAlertDialog = null
+                tempView = null
+                filePdf = null
+                fileImage = null
+                fetchDataMateri()
+            } else{
+                Toast.makeText(this@AdminMateriActivity, data[0].message_response, Toast.LENGTH_SHORT).show()
+            }
+        } else{
+            Toast.makeText(this@AdminMateriActivity, "Gagal", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setFailureTambahData(message: String) {
+        Toast.makeText(this@AdminMateriActivity, message, Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "setFailureTambahData: ${message}")
+        loading.alertDialogCancel()
+    }
+
     private fun convertStringToMultipartBody(data: String): RequestBody{
-        return RequestBody.create(MediaType.parse("multipart/form-data"), data)
+        return RequestBody.create("multipart/form-data".toMediaTypeOrNull(), data)
     }
 
     private fun setStopShimmer(){
@@ -413,7 +694,6 @@ class AdminMateriActivity : AppCompatActivity() {
             smMateri.visibility = View.GONE
         }
     }
-
 
     override fun onBackPressed() {
         super.onBackPressed()
