@@ -22,6 +22,7 @@ class AdminMateriViewModel @Inject constructor(
     private val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
     private val _postTambahMateri = MutableLiveData<UIState<ArrayList<ResponseModel>>>()
     private val _postUpdateMateri = MutableLiveData<UIState<ArrayList<ResponseModel>>>()
+    private val _postHapusMateri = MutableLiveData<UIState<ArrayList<ResponseModel>>>()
 
     fun fetchDataMateri() {
         viewModelScope.launch {
@@ -36,13 +37,13 @@ class AdminMateriViewModel @Inject constructor(
     }
 
     fun postTambahData(
-        namaMateri: RequestBody, namaPenulis: RequestBody, file: MultipartBody.Part,
-        lokasiFile: RequestBody, urlMateri: RequestBody, urlImage: RequestBody, jumlahPelihat: RequestBody
+        post: RequestBody, idMateri: RequestBody, namaMateri: RequestBody, namaPenulis: RequestBody, filePdf: MultipartBody.Part,
+        fileImage: MultipartBody.Part, lokasiFile: RequestBody, urlMateri: RequestBody, urlImage: RequestBody, jumlahPelihat: RequestBody
     ){
         viewModelScope.launch(Dispatchers.IO) {
             _postTambahMateri.postValue(UIState.Loading)
             try {
-                val postTambahMateri = api.postAdminTambahMateri(namaMateri, namaPenulis, file, lokasiFile, urlMateri, urlImage, jumlahPelihat)
+                val postTambahMateri = api.postAdminTambahMateri(post, idMateri, namaMateri, namaPenulis, filePdf, fileImage,lokasiFile, urlMateri, urlImage, jumlahPelihat)
                 _postTambahMateri.postValue(UIState.Success(postTambahMateri))
             } catch (ex: Exception){
                 _postTambahMateri.postValue(UIState.Failure("Error: ${ex.message}"))
@@ -50,11 +51,14 @@ class AdminMateriViewModel @Inject constructor(
         }
     }
 
-    fun postUpdatehData(idMateri: String, namaMateri: String, namaPenulis: String, file: MultipartBody.Part, jumlahPelihat: String){
+    fun postUpdatehData(
+        post: RequestBody, noMateri: RequestBody, idMateri: RequestBody, namaMateri: RequestBody, namaPenulis: RequestBody, filePdf: MultipartBody.Part,
+        fileImage: MultipartBody.Part, lokasiFile: RequestBody, urlMateri: RequestBody, urlImage: RequestBody, jumlahPelihat: RequestBody
+    ){
         viewModelScope.launch(Dispatchers.IO) {
             _postUpdateMateri.postValue(UIState.Loading)
             try {
-                val postTambahMateri = api.postAdminUpdateMateri(idMateri, namaMateri, namaPenulis, file, jumlahPelihat)
+                val postTambahMateri = api.postAdminUpdateMateri(post, noMateri, idMateri, namaMateri, namaPenulis, filePdf, fileImage,lokasiFile, urlMateri, urlImage, jumlahPelihat)
                 _postUpdateMateri.postValue(UIState.Success(postTambahMateri))
             } catch (ex: Exception){
                 _postUpdateMateri.postValue(UIState.Failure("Error: ${ex.message}"))
@@ -62,7 +66,65 @@ class AdminMateriViewModel @Inject constructor(
         }
     }
 
+    fun postUpdatehDataNoImage(
+        post: RequestBody, noMateri: RequestBody, idMateri: RequestBody, namaMateri: RequestBody, namaPenulis: RequestBody, filePdf: MultipartBody.Part,
+        lokasiFile: RequestBody, urlMateri: RequestBody, urlImage: RequestBody, jumlahPelihat: RequestBody
+    ){
+        viewModelScope.launch(Dispatchers.IO) {
+            _postUpdateMateri.postValue(UIState.Loading)
+            try {
+                val postTambahMateri = api.postAdminUpdateMateriNoImage(post, noMateri, idMateri, namaMateri, namaPenulis, filePdf, lokasiFile, urlMateri, urlImage, jumlahPelihat)
+                _postUpdateMateri.postValue(UIState.Success(postTambahMateri))
+            } catch (ex: Exception){
+                _postUpdateMateri.postValue(UIState.Failure("Error: ${ex.message}"))
+            }
+        }
+    }
+
+    fun postUpdatehDataNoImageAndPdf(
+        post: RequestBody, noMateri: RequestBody, idMateri: RequestBody, namaMateri: RequestBody, namaPenulis: RequestBody,
+        lokasiFile: RequestBody, urlMateri: RequestBody, urlImage: RequestBody, jumlahPelihat: RequestBody
+    ){
+        viewModelScope.launch(Dispatchers.IO) {
+            _postUpdateMateri.postValue(UIState.Loading)
+            try {
+                val postTambahMateri = api.postAdminUpdateMateriNoImageAndPdf(post, noMateri, idMateri, namaMateri, namaPenulis, lokasiFile, urlMateri, urlImage, jumlahPelihat)
+                _postUpdateMateri.postValue(UIState.Success(postTambahMateri))
+            } catch (ex: Exception){
+                _postUpdateMateri.postValue(UIState.Failure("Error: ${ex.message}"))
+            }
+        }
+    }
+
+    fun postUpdatehDataNoPdf(
+        post: RequestBody, noMateri: RequestBody, idMateri: RequestBody, namaMateri: RequestBody, namaPenulis: RequestBody,
+        fileImage: MultipartBody.Part, lokasiFile: RequestBody, urlMateri: RequestBody, urlImage: RequestBody, jumlahPelihat: RequestBody
+    ){
+        viewModelScope.launch(Dispatchers.IO) {
+            _postUpdateMateri.postValue(UIState.Loading)
+            try {
+                val postTambahMateri = api.postAdminUpdateMateriNoPdf(post, noMateri, idMateri, namaMateri, namaPenulis, fileImage,lokasiFile, urlMateri, urlImage, jumlahPelihat)
+                _postUpdateMateri.postValue(UIState.Success(postTambahMateri))
+            } catch (ex: Exception){
+                _postUpdateMateri.postValue(UIState.Failure("Error: ${ex.message}"))
+            }
+        }
+    }
+
+    fun postHapusMateri(noMateri: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            _postHapusMateri.postValue(UIState.Loading)
+            try {
+                val postTambahMateri = api.postAdminHapusMateri("", noMateri)
+                _postHapusMateri.postValue(UIState.Success(postTambahMateri))
+            } catch (ex: Exception){
+                _postHapusMateri.postValue(UIState.Failure("Error: ${ex.message}"))
+            }
+        }
+    }
+
     fun getDataMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _materi
     fun getResponseTambahMateri(): LiveData<UIState<ArrayList<ResponseModel>>> = _postTambahMateri
     fun getResponseUpdateMateri(): LiveData<UIState<ArrayList<ResponseModel>>> = _postUpdateMateri
+    fun getResponseHapusMateri(): LiveData<UIState<ArrayList<ResponseModel>>> = _postHapusMateri
 }
