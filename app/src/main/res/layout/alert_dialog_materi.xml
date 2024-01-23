@@ -49,7 +49,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="6dp"
-                    android:text="File"
+                    android:text="Upload PDF"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
@@ -61,11 +61,39 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Masukkan File"
+                    android:text="@string/ket_klik_file"
                     android:textColor="@color/black"
                     android:textStyle="normal"
                     android:textSize="16sp"
-                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:ellipsize="middle"
+                    android:background="@drawable/bg_card" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="Upload Image"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/etEditImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/etEditUsername"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/ket_klik_file"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+                    android:textSize="16sp"
+                    android:maxLines="1"
+                    android:ellipsize="middle"
                     android:background="@drawable/bg_card" />
 
                 <TextView

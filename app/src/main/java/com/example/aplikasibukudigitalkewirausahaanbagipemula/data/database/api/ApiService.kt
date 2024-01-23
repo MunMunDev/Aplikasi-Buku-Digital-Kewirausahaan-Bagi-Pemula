@@ -9,7 +9,6 @@ import okhttp3.RequestBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -72,42 +71,94 @@ interface ApiService {
         @Field("id_user") idUser: String
     ): ArrayList<ResponseModel>
 
-//    @FormUrlEncoded
-//    @POST("iuran-kebersihan/api/post.php")
-//    suspend fun postUpdateUser(
-//        @Field("update_akun") update_akun: String,
-//        @Field("id_user") id_user: String,
-//        @Field("nama") nama: String,
-//        @Field("nomor_hp") nomor_hp: String,
-//        @Field("username") username: String,
-//        @Field("password") password: String,
-//        @Field("username_lama") usernameLama: String
-//    ): ArrayList<ResponseModel>
 
-    @Headers("Content-Type: application/json")
     @Multipart
-    @FormUrlEncoded
     @POST("buku-digital-kewirausahaan/api/post.php")
     suspend fun postAdminTambahMateri(
+        @Part("tambah_materi") tambahMateri: RequestBody,
+        @Part("id_materi") idMateri: RequestBody,
         @Part("nama_materi") namaMateri: RequestBody,
         @Part("nama_penulis") namaPenulis: RequestBody,
-        @Part file: MultipartBody.Part,
+        @Part file_pdf: MultipartBody.Part,
+        @Part file_image: MultipartBody.Part,
         @Part("lokasi_file") lokasiFile: RequestBody,
         @Part("url_materi") urlMateri: RequestBody,
         @Part("url_image") urlImage: RequestBody,
         @Part("jumlah_pelihat") jumlahPelihat: RequestBody
     ): ArrayList<ResponseModel>
 
-    @Headers("Content-Type: application/json")
     @Multipart
-    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminTambahMateri(
+        @Part file_pdf: MultipartBody.Part,
+    ): ArrayList<ResponseModel>
+
+
+    @Multipart
     @POST("buku-digital-kewirausahaan/api/post.php")
     suspend fun postAdminUpdateMateri(
-        @Field("id_materi") idMateri:String,
-        @Field("nama_materi") namaMateri:String,
-        @Field("nama_penulis") namaPenulis:String,
-        @Part file: MultipartBody.Part,
-        @Field("jumlah_pelihat") jumlahPelihat:String
+        @Part("update_materi") updateMateri: RequestBody,
+        @Part("no_materi") noMateri: RequestBody,
+        @Part("id_materi") idMateri: RequestBody,
+        @Part("nama_materi") namaMateri: RequestBody,
+        @Part("nama_penulis") namaPenulis: RequestBody,
+        @Part file_pdf: MultipartBody.Part,
+        @Part file_image: MultipartBody.Part,
+        @Part("lokasi_file") lokasiFile: RequestBody,
+        @Part("url_materi") urlMateri: RequestBody,
+        @Part("url_image") urlImage: RequestBody,
+        @Part("jumlah_pelihat") jumlahPelihat: RequestBody
+    ): ArrayList<ResponseModel>
+
+    @Multipart
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminUpdateMateriNoImage(
+        @Part("update_materi") updateMateri: RequestBody,
+        @Part("no_materi") noMateri: RequestBody,
+        @Part("id_materi") idMateri: RequestBody,
+        @Part("nama_materi") namaMateri: RequestBody,
+        @Part("nama_penulis") namaPenulis: RequestBody,
+        @Part file_pdf: MultipartBody.Part,
+        @Part("lokasi_file") lokasiFile: RequestBody,
+        @Part("url_materi") urlMateri: RequestBody,
+        @Part("url_image") urlImage: RequestBody,
+        @Part("jumlah_pelihat") jumlahPelihat: RequestBody
+    ): ArrayList<ResponseModel>
+
+    @Multipart
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminUpdateMateriNoImageAndPdf(
+        @Part("update_materi") updateMateri: RequestBody,
+        @Part("no_materi") noMateri: RequestBody,
+        @Part("id_materi") idMateri: RequestBody,
+        @Part("nama_materi") namaMateri: RequestBody,
+        @Part("nama_penulis") namaPenulis: RequestBody,
+        @Part("lokasi_file") lokasiFile: RequestBody,
+        @Part("url_materi") urlMateri: RequestBody,
+        @Part("url_image") urlImage: RequestBody,
+        @Part("jumlah_pelihat") jumlahPelihat: RequestBody
+    ): ArrayList<ResponseModel>
+
+    @Multipart
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminUpdateMateriNoPdf(
+        @Part("update_materi") updateMateri: RequestBody,
+        @Part("no_materi") noMateri: RequestBody,
+        @Part("id_materi") idMateri: RequestBody,
+        @Part("nama_materi") namaMateri: RequestBody,
+        @Part("nama_penulis") namaPenulis: RequestBody,
+        @Part file_image: MultipartBody.Part,
+        @Part("lokasi_file") lokasiFile: RequestBody,
+        @Part("url_materi") urlMateri: RequestBody,
+        @Part("url_image") urlImage: RequestBody,
+        @Part("jumlah_pelihat") jumlahPelihat: RequestBody
+    ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminHapusMateri(
+        @Field("hapus_materi") hapusMateri:String,
+        @Field("no_materi") noMateri:String
     ): ArrayList<ResponseModel>
 
     @FormUrlEncoded
