@@ -1,20 +1,19 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataPopulerBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
-class PopulerVideoAdapter(private var listVideo: ArrayList<VideoModel>): RecyclerView.Adapter<PopulerVideoAdapter.ViewHolder>() {
+class PopulerVideoAdapter(
+    private var listVideo: ArrayList<VideoModel>,
+    private var click: OnClickItem.ClickVideo
+): RecyclerView.Adapter<PopulerVideoAdapter.ViewHolder>() {
     class ViewHolder(val binding: ListDataPopulerBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,25 +39,26 @@ class PopulerVideoAdapter(private var listVideo: ArrayList<VideoModel>): Recycle
             }
             itemView.apply {
                 this.setOnClickListener{
-                    setToYoutube(context, dataMateri.urlVideo)
+                    click.clickItemVideo(dataMateri, it)
+//                    setToYoutube(context, dataMateri.urlVideo)
                 }
             }
         }
     }
 
-    private fun setToYoutube(context: Context, urlVideo: String?) {
-        val id = searchIdUrlVideo(urlVideo!!)
-        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
-        val webIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("http://www.youtube.com/watch?v=$id")
-        )
-        try {
-            context.startActivity(appIntent)
-        } catch (ex: ActivityNotFoundException) {
-            context.startActivity(webIntent)
-        }
-    }
+//    private fun setToYoutube(context: Context, urlVideo: String?) {
+//        val id = searchIdUrlVideo(urlVideo!!)
+//        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
+//        val webIntent = Intent(
+//            Intent.ACTION_VIEW,
+//            Uri.parse("http://www.youtube.com/watch?v=$id")
+//        )
+//        try {
+//            context.startActivity(appIntent)
+//        } catch (ex: ActivityNotFoundException) {
+//            context.startActivity(webIntent)
+//        }
+//    }
 
     private fun setImageFromYoutube(
         binding: ListDataPopulerBinding,

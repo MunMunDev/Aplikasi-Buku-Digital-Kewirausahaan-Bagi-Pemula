@@ -24,6 +24,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertD
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -90,10 +91,10 @@ class AdminSemuaAkunActivity : AppCompatActivity() {
                 tempData.add(value)
             }
 
-            adapter = AdminUsersAdapter(data, object: AdminUsersAdapter.ClickItemListener{
-                override fun onClickItem(user: UsersModel, it: View, position:Int) {
+            adapter = AdminUsersAdapter(data, object: OnClickItem.ClickAkun{
+                override fun clickItemAkun(akun: UsersModel, it: View) {
                     val i = Intent(this@AdminSemuaAkunActivity, AdminDetailAkunActivity::class.java)
-                    i.putExtra("data", user)
+                    i.putExtra("data", akun)
                     startActivity(i)
                     finish()
                 }

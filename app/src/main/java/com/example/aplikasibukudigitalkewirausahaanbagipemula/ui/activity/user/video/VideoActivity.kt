@@ -1,6 +1,8 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.video
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +15,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.Activi
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -72,7 +75,13 @@ class VideoActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerViewVideo(data: ArrayList<VideoModel>) {
-        adapter = SemuaVideoAdapter(data)
+        adapter = SemuaVideoAdapter(data, object : OnClickItem.ClickVideo{
+            override fun clickItemVideo(video: VideoModel, it: View) {
+                viewModel.postWatchVideo(video.noVideo!!)
+                setToYoutube(video.urlVideo)
+            }
+
+        })
         binding.apply {
             rvVideo.layoutManager = LinearLayoutManager(
                 this@VideoActivity,
@@ -80,6 +89,19 @@ class VideoActivity : AppCompatActivity() {
                 false
             )
             rvVideo.adapter = adapter
+        }
+    }
+    private fun setToYoutube( urlVideo: String?) {
+        val id = adapter.searchIdUrlVideo(urlVideo!!)
+        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://www.youtube.com/watch?v=$id")
+        )
+        try {
+            startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            startActivity(webIntent)
         }
     }
 

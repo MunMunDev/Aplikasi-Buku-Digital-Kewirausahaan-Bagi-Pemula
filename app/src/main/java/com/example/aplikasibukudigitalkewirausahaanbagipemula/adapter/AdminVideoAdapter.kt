@@ -13,10 +13,11 @@ import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
 class AdminVideoAdapter(
     private var listVideo: ArrayList<VideoModel>,
-    private var click: ClickButton
+    private var click: OnClickItem.ClickVideo
 ): RecyclerView.Adapter<AdminVideoAdapter.ViewHolder>() {
 
     var tempVideo = listVideo
@@ -52,7 +53,7 @@ class AdminVideoAdapter(
                 btnBuka.text = "Settings"
                 btnBuka.setOnClickListener {
 //                    setToYoutube(itemView.context, dataVideo.urlVideo)
-                    click.clickItem(dataVideo, it)
+                    click.clickItemVideo(dataVideo, it)
                 }
             }
             itemView.apply {
@@ -101,7 +102,4 @@ class AdminVideoAdapter(
         }
     }
 
-    interface ClickButton{
-        fun clickItem(data: VideoModel, it:View)
-    }
 }

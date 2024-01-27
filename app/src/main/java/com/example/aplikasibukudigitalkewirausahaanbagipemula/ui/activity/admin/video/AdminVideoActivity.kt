@@ -20,6 +20,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertD
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -83,11 +84,11 @@ class AdminVideoActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerViewVideo(data: ArrayList<VideoModel>) {
-        adapter = AdminVideoAdapter(data, object: AdminVideoAdapter.ClickButton{
-            override fun clickItem(data: VideoModel, it: View) {
-                setClickSetting(data, it)
+        adapter = AdminVideoAdapter(data, object: OnClickItem.ClickVideo{
+            override fun clickItemVideo(video: VideoModel, it: View) {
+                viewModel.postWatchVideo(video.noVideo!!)
+                setClickSetting(video, it)
             }
-
         })
         binding.apply {
             rvVideo.layoutManager = LinearLayoutManager(

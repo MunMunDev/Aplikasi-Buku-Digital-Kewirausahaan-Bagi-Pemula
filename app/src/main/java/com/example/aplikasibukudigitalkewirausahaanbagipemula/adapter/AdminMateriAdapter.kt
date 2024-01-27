@@ -2,7 +2,6 @@ package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,10 +9,11 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
 class AdminMateriAdapter(
     private var listMateri: ArrayList<MateriModel>,
-    private var click: ClickButton
+    private var click: OnClickItem.ClickMateri
 ) : RecyclerView.Adapter<AdminMateriAdapter.ViewHolder>() {
 
     var tempMateri = listMateri
@@ -59,18 +59,10 @@ class AdminMateriAdapter(
                 tvJumlahDilihat.text = "${dataMateri.jumlahPelihat}x Di Baca"
                 btnBuka.text = "Setting"
                 btnBuka.setOnClickListener {
-                    click.clickItem(dataMateri, it)
-                }
-            }
-            itemView.apply {
-                this.setOnClickListener{
-
+                    click.clickItemMateri(dataMateri, it)
                 }
             }
         }
     }
 
-    interface ClickButton{
-        fun clickItem(data: MateriModel, it:View)
-    }
 }
