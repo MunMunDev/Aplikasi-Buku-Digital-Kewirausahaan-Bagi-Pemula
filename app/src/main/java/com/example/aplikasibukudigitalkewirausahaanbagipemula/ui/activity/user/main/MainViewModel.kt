@@ -9,6 +9,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriM
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ class MainViewModel @Inject constructor(
     val _videoPopuler = MutableLiveData<UIState<ArrayList<VideoModel>>>()
 
     fun fetchDataMateriPopuler(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _materiPopuler.postValue(UIState.Loading)
             try {
                 val dataMateri = api.getMateri("")
@@ -32,13 +33,33 @@ class MainViewModel @Inject constructor(
     }
 
     fun fetchDataVideoPopuler(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _videoPopuler.postValue(UIState.Loading)
             try {
                 val dataVideo = api.getVideo("")
                 _videoPopuler.postValue(UIState.Success(dataVideo))
             } catch (ex: Exception){
                 _videoPopuler.postValue(UIState.Failure("Error ${ex.message}"))
+            }
+        }
+    }
+
+    fun postWatchMateri(noMateri: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                api.postWatchMateri("", noMateri)
+            } catch (ex: Exception){
+
+            }
+        }
+    }
+
+    fun postWatchVideo(noVideo: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                api.postWatchVideo("", noVideo)
+            } catch (ex: Exception){
+
             }
         }
     }

@@ -9,6 +9,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriM
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +27,16 @@ class MateriViewModel @Inject constructor(
                 _materi.postValue(UIState.Success(dataMateri))
             } catch (ex: Exception) {
                 _materi.postValue(UIState.Failure("Error ${ex.message}"))
+            }
+        }
+    }
+
+    fun postWatchMateri(noMateri: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                api.postWatchMateri("", noMateri)
+            } catch (ex: Exception){
+
             }
         }
     }

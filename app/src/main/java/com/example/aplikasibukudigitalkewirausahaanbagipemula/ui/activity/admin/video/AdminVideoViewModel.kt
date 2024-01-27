@@ -72,6 +72,16 @@ class AdminVideoViewModel @Inject constructor(
         }
     }
 
+    fun postWatchVideo(noVideo: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                api.postWatchVideo("", noVideo)
+            } catch (ex: Exception){
+
+            }
+        }
+    }
+
     fun getDataVideo(): LiveData<UIState<ArrayList<VideoModel>>> = _video
     fun getResponseTambahVideo(): LiveData<UIState<ArrayList<ResponseModel>>> = _postTambahVideo
     fun getResponseUpdateVideo(): LiveData<UIState<ArrayList<ResponseModel>>> = _postUpdateVideo
