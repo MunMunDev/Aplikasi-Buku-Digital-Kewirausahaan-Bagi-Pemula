@@ -7,4 +7,5 @@
         android:bottom="12dp"
         android:left="14dp"
         android:right="14dp"/>
+    <solid android:color="@color/white"/>
 </shape>

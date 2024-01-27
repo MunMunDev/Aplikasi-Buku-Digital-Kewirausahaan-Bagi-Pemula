@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:padding="50dp"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:backgroundTint="@color/white"
+    android:background="@color/white">
 
     <ProgressBar
         android:layout_width="wrap_content"
