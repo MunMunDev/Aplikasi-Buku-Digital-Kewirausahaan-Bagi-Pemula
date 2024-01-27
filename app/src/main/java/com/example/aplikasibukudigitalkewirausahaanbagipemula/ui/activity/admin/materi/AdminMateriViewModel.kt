@@ -123,6 +123,16 @@ class AdminMateriViewModel @Inject constructor(
         }
     }
 
+    fun postWatchMateri(noMateri: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                api.postWatchMateri("", noMateri)
+            } catch (ex: Exception){
+
+            }
+        }
+    }
+
     fun getDataMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _materi
     fun getResponseTambahMateri(): LiveData<UIState<ArrayList<ResponseModel>>> = _postTambahMateri
     fun getResponseUpdateMateri(): LiveData<UIState<ArrayList<ResponseModel>>> = _postUpdateMateri

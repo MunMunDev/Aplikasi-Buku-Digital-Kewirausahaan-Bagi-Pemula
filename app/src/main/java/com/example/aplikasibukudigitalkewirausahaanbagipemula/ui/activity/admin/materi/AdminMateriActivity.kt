@@ -30,10 +30,12 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.Activi
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogKonfirmasiBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogMateriBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_pdf.ReadPdfActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KataAcak
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -109,11 +111,11 @@ class AdminMateriActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerViewMateri(data: ArrayList<MateriModel>) {
-        adapter = AdminMateriAdapter(data, object: AdminMateriAdapter.ClickButton{
-            override fun clickItem(data: MateriModel, it: View) {
-                setClickSetting(data, it)
+        adapter = AdminMateriAdapter(data, object: OnClickItem.ClickMateri{
+            override fun clickItemMateri(materi: MateriModel, it: View) {
+                viewModel.postWatchMateri(materi.noMateri!!)
+                setClickSetting(materi, it)
             }
-
         })
         binding.apply {
             rvMateri.layoutManager = LinearLayoutManager(
@@ -133,7 +135,9 @@ class AdminMateriActivity : AppCompatActivity() {
             override fun onMenuItemClick(menuItem: MenuItem?): Boolean {
                 when (menuItem!!.itemId) {
                     R.id.rincian -> {
-
+                        val intent = Intent(this@AdminMateriActivity, ReadPdfActivity::class.java)
+                        intent.putExtra("materi", data)
+                        startActivity(intent)
                         return true
                     }
                     R.id.edit -> {

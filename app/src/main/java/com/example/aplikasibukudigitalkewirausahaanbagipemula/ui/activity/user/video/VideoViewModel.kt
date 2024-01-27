@@ -9,6 +9,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriM
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +27,16 @@ class VideoViewModel @Inject constructor(
                 _video.postValue(UIState.Success(dataVideo))
             } catch (ex: Exception){
                 _video.postValue(UIState.Failure("Error ${ex.message}"))
+            }
+        }
+    }
+
+    fun postWatchVideo(noVideo: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                api.postWatchVideo("", noVideo)
+            } catch (ex: Exception){
+
             }
         }
     }

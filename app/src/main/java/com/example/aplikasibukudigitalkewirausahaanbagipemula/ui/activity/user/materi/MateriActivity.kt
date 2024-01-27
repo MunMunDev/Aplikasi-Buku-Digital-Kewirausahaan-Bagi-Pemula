@@ -11,8 +11,10 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.SemuaMater
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMateriBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_pdf.ReadPdfActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -73,7 +75,15 @@ class MateriActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerViewMateri(data: ArrayList<MateriModel>) {
-        adapter = SemuaMateriAdapter(data)
+        adapter = SemuaMateriAdapter(data, object : OnClickItem.ClickMateri {
+            override fun clickItemMateri(materi: MateriModel, it: View) {
+                viewModel.postWatchMateri(materi.noMateri!!)
+                val intent = Intent(this@MateriActivity, ReadPdfActivity::class.java)
+                intent.putExtra("materi", materi)
+                startActivity(intent)
+            }
+
+        })
         binding.apply {
             rvMateri.layoutManager = LinearLayoutManager(
                 this@MateriActivity,

@@ -141,7 +141,8 @@
                 app:layout_constraintEnd_toStartOf="@id/btnVideo"
                 android:layout_marginTop="36dp"
                 android:layout_marginStart="20dp"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                android:backgroundTint="@color/white">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -177,7 +178,8 @@
                 android:layout_marginTop="36dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                android:backgroundTint="@color/white">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -213,7 +215,8 @@
                 app:layout_constraintStart_toEndOf="@id/btnVideo"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="20dp"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                android:backgroundTint="@color/white">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

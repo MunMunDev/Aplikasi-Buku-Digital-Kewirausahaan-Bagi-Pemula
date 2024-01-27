@@ -36,7 +36,8 @@
             app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tVTitle">
+            app:layout_constraintTop_toBottomOf="@id/tVTitle"
+            android:backgroundTint="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -116,6 +117,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:hint="Masukkan Nama Materi"
+                    android:textColorHint="@color/abuabu_tua"
                     android:textColor="@color/black"
                     android:textStyle="normal"
                     android:textSize="16sp"
@@ -146,6 +148,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:hint="Masukkan Nama Penulis"
+                    android:textColorHint="@color/abuabu_tua"
                     android:textColor="@color/black"
                     android:textStyle="normal"
                     android:textSize="16sp"
@@ -176,6 +179,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:hint="Masukkan Jumlah Pelihat"
+                    android:textColorHint="@color/abuabu_tua"
                     android:textColor="@color/black"
                     android:textStyle="normal"
                     android:textSize="16sp"

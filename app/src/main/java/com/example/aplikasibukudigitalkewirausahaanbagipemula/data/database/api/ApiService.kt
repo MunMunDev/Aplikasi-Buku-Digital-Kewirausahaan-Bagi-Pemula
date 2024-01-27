@@ -186,4 +186,18 @@ interface ApiService {
         @Field("hapus_video") hapusVideo:String,
         @Field("no_video") noVideo:String
     ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postWatchVideo(
+        @Field("watch_video") watchVideo:String,
+        @Field("no_video") noVideo:String
+    ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postWatchMateri(
+        @Field("watch_materi") watchMateri:String,
+        @Field("no_materi") noMateri:String
+    ): ArrayList<ResponseModel>
 }

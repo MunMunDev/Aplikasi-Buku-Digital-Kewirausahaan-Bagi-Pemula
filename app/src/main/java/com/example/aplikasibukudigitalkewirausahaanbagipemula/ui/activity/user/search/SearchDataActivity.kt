@@ -1,8 +1,12 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.search
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -13,7 +17,9 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.SemuaVideo
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivitySearchDataBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_pdf.ReadPdfActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -124,7 +130,15 @@ class SearchDataActivity : AppCompatActivity() {
         val dataArrayList = arrayListOf<MateriModel>()
         dataArrayList.addAll(sort)
         listMateri = dataArrayList
-        adapterMateri = SemuaMateriAdapter(listMateri)
+        adapterMateri = SemuaMateriAdapter(listMateri, object : OnClickItem.ClickMateri{
+            override fun clickItemMateri(materi: MateriModel, it: View) {
+                viewModel.postWatchMateri(materi.noMateri!!)
+                val intent = Intent(this@SearchDataActivity, ReadPdfActivity::class.java)
+                intent.putExtra("materi", materi)
+                startActivity(intent)
+            }
+
+        })
         setRecyclerViewMateri(dataArrayList)
     }
 
@@ -164,8 +178,26 @@ class SearchDataActivity : AppCompatActivity() {
         val dataArrayList = arrayListOf<VideoModel>()
         dataArrayList.addAll(sort)
         listVideo = dataArrayList
-        adapterVideo = SemuaVideoAdapter(listVideo)
+        adapterVideo = SemuaVideoAdapter(listVideo, object : OnClickItem.ClickVideo{
+            override fun clickItemVideo(video: VideoModel, it: View) {
+                viewModel.postWatchVideo(video.noVideo!!)
+                setToYoutube(video.urlVideo)
+            }
+        })
 //        setRecyclerViewVideo(dataArrayList)
+    }
+    private fun setToYoutube(urlVideo: String?) {
+        val id = adapterVideo.searchIdUrlVideo(urlVideo!!)
+        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://www.youtube.com/watch?v=$id")
+        )
+        try {
+            startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            startActivity(webIntent)
+        }
     }
 
     private fun setRecyclerViewVideo() {

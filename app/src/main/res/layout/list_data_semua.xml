@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="165dp"
     android:layout_marginTop="8dp"
-    app:cardCornerRadius="12dp">
+    app:cardCornerRadius="12dp"
+    android:backgroundTint="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -87,7 +88,8 @@
             android:layout_marginStart="14dp"
             android:layout_marginEnd="14dp"
             android:text="Read Now"
-            />
+            android:textColor="@color/white"
+            android:background="@drawable/bg_btn_action"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

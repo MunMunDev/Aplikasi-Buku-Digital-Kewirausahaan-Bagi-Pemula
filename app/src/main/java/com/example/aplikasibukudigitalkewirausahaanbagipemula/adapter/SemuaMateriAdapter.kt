@@ -1,7 +1,6 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,10 +8,13 @@ import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_pdf.ReadPdfActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
-class SemuaMateriAdapter(private var listMateri: ArrayList<MateriModel>): RecyclerView.Adapter<SemuaMateriAdapter.ViewHolder>() {
+class SemuaMateriAdapter(
+    private var listMateri: ArrayList<MateriModel>,
+    private var click: OnClickItem.ClickMateri
+): RecyclerView.Adapter<SemuaMateriAdapter.ViewHolder>() {
 
     var tempMateri = listMateri
     fun searchData(kata: String){
@@ -44,25 +46,13 @@ class SemuaMateriAdapter(private var listMateri: ArrayList<MateriModel>): Recycl
                     .error(R.drawable.image_book)
                     .into(ivGambarMateri) // imageView mana yang akan diterapkan
 
-                var namaPenulis = ""
-                namaPenulis = try {
-                    val arrayNamaPenulis = dataMateri.namaPenulis!!.split(";-")
-                    arrayNamaPenulis[0]
-                } catch (ex: Exception){
-                    dataMateri.namaPenulis!!
-                }
+                val namaPenulis = dataMateri.namaPenulis!!
                 tvNamaPemateri.text = namaPenulis
                 tvJudulMateri.text = dataMateri.namaMateri
                 tvJumlahDilihat.text = "${dataMateri.jumlahPelihat}x Di Baca"
                 btnBuka.text = "Read Now"
                 btnBuka.setOnClickListener {
-                    itemView.context.startActivity(Intent(itemView.context, ReadPdfActivity::class.java))
-                }
-            }
-            itemView.apply {
-                this.setOnClickListener{
-//                    Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
-//                    context.startActivity(Intent(context, ReadPdfActivity::class.java))
+                    click.clickItemMateri(dataMateri, it)
                 }
             }
         }

@@ -1,21 +1,28 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-
+    id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 //    id 'com.google.gms.google-services'
+//    id 'org.jetbrains.kotlin.android'
 }
+
+//apply plugin: 'com.android.application'
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'dagger.hilt.android.plugin'
+//apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.example.aplikasibukudigitalkewirausahaanbagipemula'
-    compileSdk 34
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.aplikasibukudigitalkewirausahaanbagipemula"
         minSdk 24
-        targetSdk 34
+        //noinspection OldTargetApi
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -35,28 +42,48 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
-    buildFeatures{
-        viewBinding = true
+    buildFeatures {
+        viewBinding true
     }
 }
 
 dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+//    def retrofitVersion = "2.9.0"
+//    def lifecycleVersion = "2.6.2"
+//    def coroutinesVersion = "1.6.4"
+//    def activityKTXVersion = "1.8.1"
+//    def fragmentKTXVersion = "1.6.2"
+//    def hiltVersion = "2.44"
 
     def retrofitVersion = "2.9.0"
     def lifecycleVersion = "2.6.2"
     def coroutinesVersion = "1.6.4"
-    def activityKTXVersion = "1.8.1"
+    def activityKTXVersion = "1.6.1"
     def fragmentKTXVersion = "1.6.2"
     def hiltVersion = "2.44"
 
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+//    implementation 'androidx.core:core-ktx:1.12.0'
+//    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'com.google.android.material:material:1.11.0'
+//    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
@@ -80,15 +107,13 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation "com.github.bumptech.glide:glide:4.12.0"
 
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
-    //
-//    implementation 'com.github.afreakyelf:Pdf-Viewer:v1.0.7'
-//    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
-//    implementation 'com.github.mkw8263:MindevPDFViewer:1.0.4'
+
+    implementation 'com.github.afreakyelf:Pdf-Viewer:v1.0.7'
 }
 
 kapt {

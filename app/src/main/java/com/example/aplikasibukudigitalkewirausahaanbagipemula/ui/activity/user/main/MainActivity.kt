@@ -1,6 +1,8 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -15,10 +17,12 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoMo
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMainBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.akun.AkunActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.materi.MateriActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_pdf.ReadPdfActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.search.SearchDataActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.video.VideoActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -86,7 +90,10 @@ class MainActivity : AppCompatActivity() {
     private fun getDataMateri() {
         viewModel.getDataMateri().observe(this@MainActivity){result->
             when(result){
-                is UIState.Loading-> loading.alertDialogLoading(this@MainActivity)
+//                is UIState.Loading-> loading.alertDialogLoading(this@MainActivity)
+                is UIState.Loading-> {
+
+                }
                 is UIState.Failure-> setFailureDataMateri(result.message)
                 is UIState.Success-> setSuccessDataMateri(result.data)
             }
@@ -94,14 +101,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFailureDataMateri(message: String) {
-        loading.alertDialogCancel()
         setOffShimmerMateri()
         setNoHaveMateri()
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setSuccessDataMateri(data: ArrayList<MateriModel>) {
-        loading.alertDialogCancel()
         setOffShimmerMateri()
 
         if(data.isNotEmpty()){
@@ -109,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             val sort = data.sortedWith(compareBy { it.jumlahPelihat })
             val dataArrayList = arrayListOf<MateriModel>()
             dataArrayList.addAll(sort)
-            setAdapter(dataArrayList)
+            setAdapterMateri(dataArrayList)
 
 //            Toast.makeText(this@MainActivity, "ada data ${dataArrayList.size}", Toast.LENGTH_SHORT).show()
 //            for (value in dataArrayList){
@@ -120,8 +125,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAdapter(data: ArrayList<MateriModel>) {
-        adapter = PopulerMateriAdapter(data)
+    private fun setAdapterMateri(data: ArrayList<MateriModel>) {
+        adapter = PopulerMateriAdapter(data, object : OnClickItem.ClickMateri{
+            override fun clickItemMateri(materi: MateriModel, it: View) {
+                viewModel.postWatchMateri(materi.noMateri!!)
+                val intent = Intent(this@MainActivity, ReadPdfActivity::class.java)
+                intent.putExtra("materi", materi)
+                startActivity(intent)
+            }
+        })
         binding.apply {
             rvTrendsMateri.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             rvTrendsMateri.adapter = adapter
@@ -193,10 +205,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAdapterVideoPopuler(data: ArrayList<VideoModel>) {
-        adapterVideoPopuler = PopulerVideoAdapter(data)
+        adapterVideoPopuler = PopulerVideoAdapter(data, object : OnClickItem.ClickVideo{
+            override fun clickItemVideo(video: VideoModel, it: View) {
+                viewModel.postWatchVideo(video.noVideo!!)
+                setToYoutube(video.urlVideo)
+            }
+
+        })
         binding.apply {
             rvTrendsVideo.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             rvTrendsVideo.adapter = adapterVideoPopuler
+        }
+    }
+    private fun setToYoutube(urlVideo: String?) {
+        val id = searchIdUrlVideo(urlVideo!!)
+        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://www.youtube.com/watch?v=$id")
+        )
+        try {
+            startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            startActivity(webIntent)
+        }
+    }
+    fun searchIdUrlVideo(urlVideo: String): String {
+        return try {
+            val arrayUrlImageVideo = urlVideo.split("v=")
+            arrayUrlImageVideo[1]
+        } catch (ex: Exception){
+            val arrayUrlImageVideo = urlVideo.split("si=")
+            arrayUrlImageVideo[1]
         }
     }
 

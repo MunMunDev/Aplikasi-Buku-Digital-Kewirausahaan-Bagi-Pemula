@@ -9,8 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.UsersModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListAdminUsersBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
-class AdminUsersAdapter(var arrayUser: ArrayList<UsersModel>, val listener: ClickItemListener): RecyclerView.Adapter<AdminUsersAdapter.AdminUsersViewHolder>() {
+class AdminUsersAdapter(
+    var arrayUser: ArrayList<UsersModel>,
+    val listener: OnClickItem.ClickAkun
+): RecyclerView.Adapter<AdminUsersAdapter.AdminUsersViewHolder>() {
 
     class AdminUsersViewHolder(val binding: ListAdminUsersBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -35,12 +39,9 @@ class AdminUsersAdapter(var arrayUser: ArrayList<UsersModel>, val listener: Clic
             tvNomorHp.text = data.nomorHp
 
             clBody.setOnClickListener {
-                listener.onClickItem(data, it, position)
+                listener.clickItemAkun(data, it)
             }
         }
     }
 
-    interface ClickItemListener{
-        fun onClickItem(user: UsersModel, it:View, position: Int)
-    }
 }
