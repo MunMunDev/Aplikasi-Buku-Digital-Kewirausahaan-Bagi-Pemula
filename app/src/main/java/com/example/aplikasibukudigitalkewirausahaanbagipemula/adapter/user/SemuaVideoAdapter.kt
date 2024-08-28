@@ -1,5 +1,6 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.user
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,40 +8,53 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataPopulerBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
-class PopulerVideoAdapter(
+class SemuaVideoAdapter(
     private var listVideo: ArrayList<VideoModel>,
     private var click: OnClickItem.ClickVideo
-): RecyclerView.Adapter<PopulerVideoAdapter.ViewHolder>() {
-    class ViewHolder(val binding: ListDataPopulerBinding) : RecyclerView.ViewHolder(binding.root)
+): RecyclerView.Adapter<SemuaVideoAdapter.ViewHolder>() {
+
+    var tempVideo = listVideo
+    fun searchData(kata: String){
+        val vKata = kata.toLowerCase().trim()
+        var data = listVideo.filter {
+            it.namaVideo!!.lowercase().trim().contains(vKata)
+        } as ArrayList
+        tempVideo = data
+        notifyDataSetChanged()
+    }
+
+    class ViewHolder(val binding: ListDataSemuaBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListDataPopulerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListDataSemuaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return if(listVideo.size>2){
-            3
-        } else{
-            listVideo.size
-        }
+        return tempVideo.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val dataMateri = listVideo[position]
+        val dataVideo = tempVideo[position]
         holder.apply {
-            setImageFromYoutube(binding, itemView, dataMateri.urlVideo)
+            setImageFromYoutube(binding, itemView, dataVideo.urlVideo)
             binding.apply {
-                tvJudulMateri.text = dataMateri.namaVideo
-                tvNamaPemateri.text = "YouTube"
+                tvJudulMateri.text = dataVideo.namaVideo
+//                tvNamaPemateri.text = "YouTube"
+//                tvJumlahDilihat.text = "${dataVideo.jumlahPelihat}x Di Tonton"
+                btnBuka.text = "Watch Now"
+                btnBuka.setOnClickListener {
+                    click.clickItemVideo(dataVideo, it)
+//                    setToYoutube(itemView.context, dataVideo.urlVideo)
+                }
             }
             itemView.apply {
                 this.setOnClickListener{
-                    click.clickItemVideo(dataMateri, it)
-//                    setToYoutube(context, dataMateri.urlVideo)
+//                    setToYoutube(context, dataVideo.urlVideo)
                 }
             }
         }
@@ -61,7 +75,7 @@ class PopulerVideoAdapter(
 //    }
 
     private fun setImageFromYoutube(
-        binding: ListDataPopulerBinding,
+        binding: ListDataSemuaBinding,
         itemView: View,
         urlVideo: String?
     ) {

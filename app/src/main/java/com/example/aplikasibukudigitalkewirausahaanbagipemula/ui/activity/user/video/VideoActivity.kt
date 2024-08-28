@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.SemuaVideoAdapter
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.user.SemuaVideoAdapter
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityVideoBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity

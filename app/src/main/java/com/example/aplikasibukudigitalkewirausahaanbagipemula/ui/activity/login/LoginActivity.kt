@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun button(){
-        btnDaftar()
+//        btnDaftar()
         btnLogin()
     }
 
@@ -74,11 +74,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun btnDaftar() {
-        loginBinding.tvDaftar.setOnClickListener{
-            startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
-        }
-    }
+//    private fun btnDaftar() {
+//        loginBinding.tvDaftar.setOnClickListener{
+//            startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+//        }
+//    }
 
     private fun cekUsers(username: String, password: String) {
         loginViewModel.fetchDataUser(username, password)
@@ -121,11 +121,12 @@ class LoginActivity : AppCompatActivity() {
 
         try{
             Toast.makeText(this@LoginActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
-            sharedPreferencesLogin.setLogin(valueIdUser, valueNama, valueNomorHp, valueUsername, valuePassword, valueSebagai)
-            if(valueSebagai=="user"){
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-            } else{
+            if(valueSebagai=="admin"){
+                sharedPreferencesLogin.setLogin(valueIdUser, valueNama, valueNomorHp, valueUsername, valuePassword, valueSebagai)
                 startActivity(Intent(this@LoginActivity, AdminMainActivity::class.java))
+                finish()
+            } else{
+                Toast.makeText(this@LoginActivity, "Data tidak ditemukan \nPastikan Username dan Password ada", Toast.LENGTH_SHORT).show()
             }
         } catch (ex: Exception){
             Toast.makeText(this@LoginActivity, "gagal: $ex", Toast.LENGTH_SHORT).show()

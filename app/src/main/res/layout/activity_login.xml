@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:gravity="center"
-                android:text="Login"
+                android:text="Login Admin"
                 android:textAllCaps="true"
                 android:textSize="20sp"
                 android:textColor="@color/black"
@@ -80,36 +80,36 @@
                 android:inputType="textPassword"
                 android:maxLength="16"/>
 
-            <TextView
-                android:id="@+id/titleKeterangan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/etPassword"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="10dp"
-                android:text="Belum Punya Akun? "
-                android:textColor="@color/black"
-                android:textSize="14sp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/titleKeterangan"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/etPassword"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:text="Belum Punya Akun? "-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="14sp"/>-->
 
-            <TextView
-                android:id="@+id/tvDaftar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/etPassword"
-                app:layout_constraintStart_toEndOf="@+id/titleKeterangan"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="10dp"
-                android:text="Daftar "
-                android:textColor="@color/primaryColor"
-                android:textSize="14sp"
-                android:textStyle="bold"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tvDaftar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/etPassword"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/titleKeterangan"-->
+<!--                android:layout_marginStart="3dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:text="Daftar "-->
+<!--                android:textColor="@color/primaryColor"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="bold"/>-->
 
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/titleKeterangan"
-                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/etPassword"
+                android:layout_marginTop="14dp"
                 android:text="Login"
                 android:textColor="@color/white"
                 android:textAllCaps="true"

@@ -11,7 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.AdminVideoAdapter
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.admin.AdminVideoAdapter
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.ResponseModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityAdminVideoBinding

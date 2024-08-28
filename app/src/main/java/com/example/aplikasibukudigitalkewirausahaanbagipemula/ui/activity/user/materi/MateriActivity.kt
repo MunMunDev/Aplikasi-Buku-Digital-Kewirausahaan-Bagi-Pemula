@@ -7,11 +7,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.SemuaMateriAdapter
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.user.SemuaMateriAdapter
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriListModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityMateriBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_pdf.ReadPdfActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_materi.ReadMateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
@@ -65,25 +65,25 @@ class MateriActivity : AppCompatActivity() {
         loading.alertDialogCancel()
     }
 
-    private fun setSuccessDataMateri(data: ArrayList<MateriModel>) {
+    private fun setSuccessDataMateri(data: ArrayList<MateriListModel>) {
         loading.alertDialogCancel()
         setStopShimmer()
-        val sort = data.sortedWith(compareBy { it.namaMateri })
-        val dataArrayList = arrayListOf<MateriModel>()
+        val sort = data.sortedWith(compareBy { it.judul })
+        val dataArrayList = arrayListOf<MateriListModel>()
         dataArrayList.addAll(sort)
         setRecyclerViewMateri(dataArrayList)
     }
 
-    private fun setRecyclerViewMateri(data: ArrayList<MateriModel>) {
+    private fun setRecyclerViewMateri(data: ArrayList<MateriListModel>) {
         adapter = SemuaMateriAdapter(data, object : OnClickItem.ClickMateri {
-            override fun clickItemMateri(materi: MateriModel, it: View) {
-                viewModel.postWatchMateri(materi.noMateri!!)
-                val intent = Intent(this@MateriActivity, ReadPdfActivity::class.java)
-                intent.putExtra("materi", materi)
+            override fun clickItemMateri(materi: MateriListModel, it: View) {
+                val intent = Intent(this@MateriActivity, ReadMateriActivity::class.java)
+                intent.putExtra("idListMateri", materi.idListMateri)
+                intent.putExtra("judul", materi.judul)
                 startActivity(intent)
             }
-
         })
+
         binding.apply {
             rvMateri.layoutManager = LinearLayoutManager(
                 this@MateriActivity,

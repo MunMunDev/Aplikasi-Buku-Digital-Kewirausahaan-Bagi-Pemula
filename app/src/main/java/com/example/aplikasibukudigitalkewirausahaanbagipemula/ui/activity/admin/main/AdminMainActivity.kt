@@ -3,9 +3,11 @@ package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityAdminMainBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.akun.AdminSemuaAkunActivity
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.AdminMateriActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.main.AdminMateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.video.AdminVideoActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.KontrolNavigationDrawer
 
@@ -44,5 +46,18 @@ class AdminMainActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    private var tapDuaKali = false
+    override fun onBackPressed() {
+        if (tapDuaKali){
+            super.onBackPressed()
+        }
+        tapDuaKali = true
+        Toast.makeText(this@AdminMainActivity, "Tekan Sekali Lagi untuk keluar", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed({
+            tapDuaKali = false
+        }, 2000)
     }
 }

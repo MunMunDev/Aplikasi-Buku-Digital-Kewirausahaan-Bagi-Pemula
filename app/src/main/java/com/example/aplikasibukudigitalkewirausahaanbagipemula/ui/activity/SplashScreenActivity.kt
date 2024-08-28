@@ -25,17 +25,17 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             if(sharedPreferencesLogin.getIdUser() == 0){
+                startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
 //                startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
                 finish()
-                startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
             }
             else{
-                if(sharedPreferencesLogin.getSebagai() == "user"){
-                    startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+                if(sharedPreferencesLogin.getSebagai() == "admin"){
+                    startActivity(Intent(this@SplashScreenActivity, AdminMainActivity::class.java))
                     finish()
                 }
-                else if(sharedPreferencesLogin.getSebagai() == "admin"){
-                    startActivity(Intent(this@SplashScreenActivity, AdminMainActivity::class.java))
+                else {
+                    startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
                     finish()
                 }
             }

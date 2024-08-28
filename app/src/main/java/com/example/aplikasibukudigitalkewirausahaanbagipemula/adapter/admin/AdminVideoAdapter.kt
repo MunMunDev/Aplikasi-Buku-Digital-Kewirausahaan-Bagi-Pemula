@@ -1,6 +1,10 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.admin
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +15,10 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoMo
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
-class SemuaVideoAdapter(
+class AdminVideoAdapter(
     private var listVideo: ArrayList<VideoModel>,
     private var click: OnClickItem.ClickVideo
-): RecyclerView.Adapter<SemuaVideoAdapter.ViewHolder>() {
+): RecyclerView.Adapter<AdminVideoAdapter.ViewHolder>() {
 
     var tempVideo = listVideo
     fun searchData(kata: String){
@@ -44,35 +48,35 @@ class SemuaVideoAdapter(
             setImageFromYoutube(binding, itemView, dataVideo.urlVideo)
             binding.apply {
                 tvJudulMateri.text = dataVideo.namaVideo
-                tvNamaPemateri.text = "YouTube"
-                tvJumlahDilihat.text = "${dataVideo.jumlahPelihat}x Di Tonton"
-                btnBuka.text = "Watch Now"
+//                tvNamaPemateri.text = "YouTube"
+//                tvJumlahDilihat.text = "${dataVideo.jumlahPelihat}x Di Tonton"
+                btnBuka.text = "Settings"
                 btnBuka.setOnClickListener {
-                    click.clickItemVideo(dataVideo, it)
 //                    setToYoutube(itemView.context, dataVideo.urlVideo)
+                    click.clickItemVideo(dataVideo, it)
                 }
             }
             itemView.apply {
                 this.setOnClickListener{
-//                    setToYoutube(context, dataVideo.urlVideo)
+//                    click.clickItem(dataVideo, it)
                 }
             }
         }
     }
 
-//    private fun setToYoutube(context: Context, urlVideo: String?) {
-//        val id = searchIdUrlVideo(urlVideo!!)
-//        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
-//        val webIntent = Intent(
-//            Intent.ACTION_VIEW,
-//            Uri.parse("http://www.youtube.com/watch?v=$id")
-//        )
-//        try {
-//            context.startActivity(appIntent)
-//        } catch (ex: ActivityNotFoundException) {
-//            context.startActivity(webIntent)
-//        }
-//    }
+    fun setToYoutube(context: Context, urlVideo: String?) {
+        val id = searchIdUrlVideo(urlVideo!!)
+        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://www.youtube.com/watch?v=$id")
+        )
+        try {
+            context.startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            context.startActivity(webIntent)
+        }
+    }
 
     private fun setImageFromYoutube(
         binding: ListDataSemuaBinding,
@@ -97,4 +101,5 @@ class SemuaVideoAdapter(
             arrayUrlImageVideo[1]
         }
     }
+
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.database.api.ApiService
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriListModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
@@ -17,13 +18,13 @@ import javax.inject.Inject
 class MateriViewModel @Inject constructor(
     private val api: ApiService
 ): ViewModel() {
-    private val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
+    private val _materi = MutableLiveData<UIState<ArrayList<MateriListModel>>>()
 
     fun fetchDataMateri() {
         viewModelScope.launch {
             _materi.postValue(UIState.Loading)
             try {
-                val dataMateri = api.getMateri("")
+                val dataMateri = api.getListMateri("")
                 _materi.postValue(UIState.Success(dataMateri))
             } catch (ex: Exception) {
                 _materi.postValue(UIState.Failure("Error ${ex.message}"))
@@ -41,6 +42,6 @@ class MateriViewModel @Inject constructor(
         }
     }
 
-    fun getDataMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _materi
+    fun getDataMateri(): LiveData<UIState<ArrayList<MateriListModel>>> = _materi
 
 }

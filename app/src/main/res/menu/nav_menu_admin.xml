@@ -16,10 +16,10 @@
             android:id="@+id/adminNavDrawerVideo"
             android:title="Video"
             android:icon="@drawable/baseline_ondemand_video_24"/>
-        <item
-            android:id="@+id/adminNavDrawerAkun"
-            android:title="Semua Akun"
-            android:icon="@drawable/gambar_akun"/>
+<!--        <item-->
+<!--            android:id="@+id/adminNavDrawerAkun"-->
+<!--            android:title="Semua Akun"-->
+<!--            android:icon="@drawable/gambar_akun"/>-->
     </group>
 
     <group android:id="@+id/adminDrawerBottom">

@@ -12,12 +12,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.SemuaMateriAdapter
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.SemuaVideoAdapter
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.user.SemuaMateriAdapter
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.user.SemuaVideoAdapter
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriListModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.VideoModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivitySearchDataBinding
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_pdf.ReadPdfActivity
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_materi.ReadMateriActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
@@ -29,7 +29,7 @@ class SearchDataActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchDataBinding
     @Inject lateinit var loading: LoadingAlertDialog
     private val viewModel: SearchViewModel by viewModels()
-    private var listMateri = ArrayList<MateriModel>()
+    private var listMateri = ArrayList<MateriListModel>()
     private var listVideo = ArrayList<VideoModel>()
     private lateinit var adapterMateri: SemuaMateriAdapter
     private lateinit var adapterVideo: SemuaVideoAdapter
@@ -124,17 +124,17 @@ class SearchDataActivity : AppCompatActivity() {
         Toast.makeText(this@SearchDataActivity, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun setDataSuccessMateri(data: ArrayList<MateriModel>) {
+    private fun setDataSuccessMateri(data: ArrayList<MateriListModel>) {
         loading.alertDialogCancel()
-        val sort = data.sortedWith(compareBy { it.namaMateri })
-        val dataArrayList = arrayListOf<MateriModel>()
+        val sort = data.sortedWith(compareBy { it.judul })
+        val dataArrayList = arrayListOf<MateriListModel>()
         dataArrayList.addAll(sort)
         listMateri = dataArrayList
         adapterMateri = SemuaMateriAdapter(listMateri, object : OnClickItem.ClickMateri{
-            override fun clickItemMateri(materi: MateriModel, it: View) {
-                viewModel.postWatchMateri(materi.noMateri!!)
-                val intent = Intent(this@SearchDataActivity, ReadPdfActivity::class.java)
-                intent.putExtra("materi", materi)
+            override fun clickItemMateri(materi: MateriListModel, it: View) {
+                val intent = Intent(this@SearchDataActivity, ReadMateriActivity::class.java)
+                intent.putExtra("idListMateri", materi.idListMateri)
+                intent.putExtra("judul", materi.judul)
                 startActivity(intent)
             }
 
@@ -142,7 +142,7 @@ class SearchDataActivity : AppCompatActivity() {
         setRecyclerViewMateri(dataArrayList)
     }
 
-    private fun setRecyclerViewMateri(data: ArrayList<MateriModel>) {
+    private fun setRecyclerViewMateri(data: ArrayList<MateriListModel>) {
         binding.apply {
             rvData.layoutManager = LinearLayoutManager(
                 this@SearchDataActivity,

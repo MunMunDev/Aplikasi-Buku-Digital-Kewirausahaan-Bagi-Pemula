@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -22,7 +22,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AplikasiBukuDigitalKewirausahaanBagiPemula"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".ui.activity.admin.materi.detail.AdminMateriDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.user.read_materi.ReadMateriActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activity.admin.akun.AdminDetailAkunActivity"
             android:exported="false" />
@@ -36,7 +42,7 @@
             android:name=".ui.activity.user.akun.AkunActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.admin.materi.AdminMateriActivity"
+            android:name=".ui.activity.admin.materi.main.AdminMateriActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.admin.main.AdminMainActivity"
@@ -49,7 +55,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.activity.SplashScreenActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,9 +70,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.activity.user.search.SearchDataActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.user.read_pdf.ReadPdfActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.user.main.MainActivity"

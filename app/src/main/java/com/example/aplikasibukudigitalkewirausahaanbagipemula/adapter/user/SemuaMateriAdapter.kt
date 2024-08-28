@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.user
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriListModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
 class SemuaMateriAdapter(
-    private var listMateri: ArrayList<MateriModel>,
+    private var listMateri: ArrayList<MateriListModel>,
     private var click: OnClickItem.ClickMateri
 ): RecyclerView.Adapter<SemuaMateriAdapter.ViewHolder>() {
 
@@ -20,7 +20,7 @@ class SemuaMateriAdapter(
     fun searchData(kata: String){
         val vKata = kata.toLowerCase().trim()
         var data = listMateri.filter {
-            it.namaMateri!!.lowercase().trim().contains(vKata)
+            it.judul!!.lowercase().trim().contains(vKata)
         } as ArrayList
         tempMateri = data
         notifyDataSetChanged()
@@ -42,14 +42,11 @@ class SemuaMateriAdapter(
         holder.apply {
             binding.apply {
                 Glide.with(itemView.context)
-                    .load("${Constant.BASE_URL}${dataMateri.lokasiFile}${dataMateri.urlImage}") // URL Gambar
+                    .load("${Constant.BASE_URL}${Constant.GAMBAR_URL}${dataMateri.gambar}") // URL Gambar
                     .error(R.drawable.image_book)
                     .into(ivGambarMateri) // imageView mana yang akan diterapkan
 
-                val namaPenulis = dataMateri.namaPenulis!!
-                tvNamaPemateri.text = namaPenulis
-                tvJudulMateri.text = dataMateri.namaMateri
-                tvJumlahDilihat.text = "${dataMateri.jumlahPelihat}x Di Baca"
+                tvJudulMateri.text = dataMateri.judul
                 btnBuka.text = "Read Now"
                 btnBuka.setOnClickListener {
                     click.clickItemMateri(dataMateri, it)

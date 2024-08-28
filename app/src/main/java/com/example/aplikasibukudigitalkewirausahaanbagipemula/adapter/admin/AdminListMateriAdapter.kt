@@ -1,4 +1,4 @@
-package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter
+package com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.admin
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,25 +6,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
-import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriListModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListDataSemuaBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
-class AdminMateriAdapter(
-    private var listMateri: ArrayList<MateriModel>,
+class AdminListMateriAdapter(
+    private var listMateri: ArrayList<MateriListModel>,
     private var click: OnClickItem.ClickMateri
-) : RecyclerView.Adapter<AdminMateriAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<AdminListMateriAdapter.ViewHolder>() {
 
     var tempMateri = listMateri
-    fun searchData(kata: String){
-        val vKata = kata.toLowerCase().trim()
-        var data = listMateri.filter {
-            it.namaMateri!!.lowercase().trim().contains(vKata)
-        } as ArrayList
-        tempMateri = data
-        notifyDataSetChanged()
-    }
+//    fun searchData(kata: String){
+//        val vKata = kata.toLowerCase().trim()
+//        var data = listMateri.filter {
+//            it.namaMateri!!.lowercase().trim().contains(vKata)
+//        } as ArrayList
+//        tempMateri = data
+//        notifyDataSetChanged()
+//    }
 
     class ViewHolder(val binding: ListDataSemuaBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -43,21 +43,12 @@ class AdminMateriAdapter(
         holder.apply {
             binding.apply {
                 Glide.with(itemView.context)
-                    .load("${Constant.BASE_URL}${dataMateri.lokasiFile}${dataMateri.urlImage}") // URL Gambar
+                    .load("${Constant.BASE_URL}${Constant.GAMBAR_URL}${dataMateri.gambar}") // URL Gambar
                     .error(R.drawable.image_book)
                     .into(ivGambarMateri) // imageView mana yang akan diterapkan
 
-                var namaPenulis = ""
-                namaPenulis = try {
-                    val arrayNamaPenulis = dataMateri.namaPenulis!!.split(";-")
-                    arrayNamaPenulis[0]
-                } catch (ex: Exception){
-                    dataMateri.namaPenulis!!
-                }
-                tvNamaPemateri.text = namaPenulis
-                tvJudulMateri.text = dataMateri.namaMateri
-                tvJumlahDilihat.text = "${dataMateri.jumlahPelihat}x Di Baca"
-                btnBuka.text = "Setting"
+                tvJudulMateri.text = dataMateri.judul
+                btnBuka.text = "Settings"
                 btnBuka.setOnClickListener {
                     click.clickItemMateri(dataMateri, it)
                 }
