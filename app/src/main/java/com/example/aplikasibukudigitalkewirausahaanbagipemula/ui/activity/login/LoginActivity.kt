@@ -136,15 +136,7 @@ class LoginActivity : AppCompatActivity() {
 
     var tapDuaKali = false
     override fun onBackPressed() {
-        if (tapDuaKali){
-            super.onBackPressed()
-        }
-        tapDuaKali = true
-        Toast.makeText(this@LoginActivity, "Tekan Sekali Lagi untuk keluar", Toast.LENGTH_SHORT).show()
-
-        Handler().postDelayed({
-            tapDuaKali = false
-        }, 2000)
-
+        super.onBackPressed()
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
     }
 }

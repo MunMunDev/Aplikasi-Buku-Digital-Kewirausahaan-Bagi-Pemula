@@ -4,12 +4,14 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ListAdminMateriBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 
 class AdminMateriAdapter(
@@ -54,11 +56,11 @@ class AdminMateriAdapter(
                 tvSetting.setTypeface(null, Typeface.BOLD)
             }
             else{
-                val valTentangStroke = listValTentangStroke[(position-1)]
+                val materi = listValTentangStroke[(position-1)]
 
                 tvNo.text = "$position"
-                tvJudul.text = valTentangStroke.judul
-                tvDeskripsi.text = valTentangStroke.deskripsi
+                tvJudul.text = materi.judul
+                tvDeskripsi.text = materi.deskripsi
                 tvSetting.text = ":::"
 
                 tvNo.setBackgroundResource(R.drawable.bg_table)
@@ -78,14 +80,20 @@ class AdminMateriAdapter(
 
                 tvJudul.gravity = Gravity.CENTER_VERTICAL
 
+                tvGambar.visibility = View.GONE
+                ivGambar.visibility = View.VISIBLE
+
                 tvJudul.setOnClickListener{
-                    onClick.clickItemJudul(valTentangStroke.judul!!, it)
+                    onClick.clickItemJudul(materi.judul!!, it)
                 }
                 tvDeskripsi.setOnClickListener {
-                    onClick.clickItemDeskripsi(valTentangStroke.deskripsi!!, it)
+                    onClick.clickItemDeskripsi(materi.deskripsi!!, it)
+                }
+                ivGambar.setOnClickListener {
+                    onClick.clickItemGambar(materi.idMateri!!, materi.judul!!, it)
                 }
                 tvSetting.setOnClickListener {
-                    onClick.clickItemSetting(valTentangStroke, it)
+                    onClick.clickItemSetting(materi, it)
                 }
             }
         }

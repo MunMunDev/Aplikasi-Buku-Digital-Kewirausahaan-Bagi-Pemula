@@ -16,20 +16,20 @@ import javax.inject.Inject
 class ReadMateriViewModel @Inject constructor(
     private val api: ApiService
 ): ViewModel() {
-    private val _tentangStrokeDetail = MutableLiveData<UIState<ArrayList<MateriModel>>>()
+    private val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
 
     fun fetchMateri(idMateri: String) {
         viewModelScope.launch {
-            _tentangStrokeDetail.postValue(UIState.Loading)
+            _materi.postValue(UIState.Loading)
             delay(1_000)
             try {
                 val data = api.getMateri("", idMateri)
-                _tentangStrokeDetail.postValue(UIState.Success(data))
+                _materi.postValue(UIState.Success(data))
             } catch (ex: Exception) {
-                _tentangStrokeDetail.postValue(UIState.Failure("Error ${ex.message}"))
+                _materi.postValue(UIState.Failure("Error ${ex.message}"))
             }
         }
     }
 
-    fun getMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _tentangStrokeDetail
+    fun getMateri(): LiveData<UIState<ArrayList<MateriModel>>> = _materi
 }

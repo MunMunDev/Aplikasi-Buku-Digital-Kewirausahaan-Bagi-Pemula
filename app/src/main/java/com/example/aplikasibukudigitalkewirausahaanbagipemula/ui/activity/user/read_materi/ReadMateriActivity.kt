@@ -5,10 +5,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.R
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.adapter.user.ReadMateriAdapter
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.ActivityReadMateriBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogShowImageBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.Constant
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.network.UIState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -78,12 +84,39 @@ class ReadMateriActivity : AppCompatActivity() {
     }
 
     private fun setAdapter(data: ArrayList<MateriModel>) {
-        adapter = ReadMateriAdapter(data)
+        adapter = ReadMateriAdapter(data, object : OnClickItem.ClickMateriGambar{
+            override fun clickItemGambar(gambar: String, deskripsi: String, it: View) {
+                setShowImage(gambar, deskripsi)
+            }
+        })
 
         binding.apply {
             tvMateri.layoutManager = LinearLayoutManager(this@ReadMateriActivity, LinearLayoutManager.VERTICAL, false)
             tvMateri.adapter = adapter
         }
+    }
+
+    private fun setShowImage(gambar: String, deskrispi:String) {
+        val view = AlertDialogShowImageBinding.inflate(layoutInflater)
+
+        val alertDialog = AlertDialog.Builder(this@ReadMateriActivity)
+        alertDialog.setView(view.root)
+            .setCancelable(false)
+        val dialogInputan = alertDialog.create()
+        dialogInputan.show()
+
+        view.apply {
+            tvTitle.text = "$deskrispi"
+            btnClose.setOnClickListener {
+                dialogInputan.dismiss()
+            }
+        }
+
+        Glide.with(this@ReadMateriActivity)
+            .load("${Constant.BASE_URL}${Constant.GAMBAR_URL}/$gambar") // URL Gambar
+            .error(R.drawable.gambar_error_image)
+            .into(view.ivShowImage) // imageView mana yang akan diterapkan
+
     }
 
     private fun setStopShimmer(){

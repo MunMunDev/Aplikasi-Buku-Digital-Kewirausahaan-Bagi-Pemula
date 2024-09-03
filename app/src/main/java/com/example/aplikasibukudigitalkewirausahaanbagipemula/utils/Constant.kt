@@ -2,7 +2,7 @@ package com.example.aplikasibukudigitalkewirausahaanbagipemula.utils
 
 object Constant {
 //    const val BASE_URL = "https://aplikasitugas17.000webhostapp.com/"
-//    const val BASE_URL = "http://192.168.17.5/"
+//    const val BASE_URL = "http://192.168.17.4/"
 //    const val BASE_URL = "http://192.168.167.91/"
     const val BASE_URL = "https://aplikasi-tugas-kampus.my.id/"
 

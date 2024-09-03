@@ -18,20 +18,20 @@ import javax.inject.Inject
 class AdminMateriDetailViewModel @Inject constructor(
     private val api: ApiService
 ): ViewModel() {
-    private val _valueTentangStroke = MutableLiveData<UIState<ArrayList<MateriModel>>>()
+    private val _materi = MutableLiveData<UIState<ArrayList<MateriModel>>>()
     private val _postTambahMateri = MutableLiveData<UIState<ArrayList<ResponseModel>>>()
     private val _postUpdateMateri = MutableLiveData<UIState<ArrayList<ResponseModel>>>()
     private val _postHapusMateri = MutableLiveData<UIState<ArrayList<ResponseModel>>>()
 
     fun fetchMateri(idListMateri: String) {
         viewModelScope.launch {
-            _valueTentangStroke.postValue(UIState.Loading)
+            _materi.postValue(UIState.Loading)
             delay(1_000)
             try {
                 val data = api.getMateri("", idListMateri)
-                _valueTentangStroke.postValue(UIState.Success(data))
+                _materi.postValue(UIState.Success(data))
             } catch (ex: Exception) {
-                _valueTentangStroke.postValue(UIState.Failure("Error ${ex.message}"))
+                _materi.postValue(UIState.Failure("Error ${ex.message}"))
             }
         }
     }
@@ -80,7 +80,7 @@ class AdminMateriDetailViewModel @Inject constructor(
         }
     }
 
-    fun getTentangStrokeList(): LiveData<UIState<ArrayList<MateriModel>>> = _valueTentangStroke
+    fun getTentangStrokeList(): LiveData<UIState<ArrayList<MateriModel>>> = _materi
     fun getTambahMateri(): LiveData<UIState<ArrayList<ResponseModel>>> = _postTambahMateri
     fun getUpdateMateri(): LiveData<UIState<ArrayList<ResponseModel>>> = _postUpdateMateri
     fun getHapusMateri(): LiveData<UIState<ArrayList<ResponseModel>>> = _postHapusMateri

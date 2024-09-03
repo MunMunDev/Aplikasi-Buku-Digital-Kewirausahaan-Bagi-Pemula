@@ -16,4 +16,7 @@ class MateriModel (
 
     @SerializedName("deskripsi")
     var deskripsi: String? = null,
+
+    @SerializedName("materi_gambar")
+    var materi_gambar: ArrayList<MateriGambarModel>? = null,
 )

@@ -1,5 +1,6 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.data.database.api
 
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriGambarModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriListModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.MateriModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.data.model.ResponseModel
@@ -42,9 +43,13 @@ interface ApiService {
     ): ArrayList<MateriModel>
 
     @GET("buku-digital-kewirausahaan/api/get.php")
+    suspend fun getMateriGambar(@Query("get_materi_gambar") getAllMateriGambar: String,
+                                @Query("id_materi") id_materi: String
+    ): ArrayList<MateriGambarModel>
+
+    @GET("buku-digital-kewirausahaan/api/get.php")
     suspend fun getVideo(@Query("get_all_video") getAllVideo: String
     ): ArrayList<VideoModel>
-
 
     // POST
     @FormUrlEncoded
@@ -135,6 +140,39 @@ interface ApiService {
     suspend fun postHapusMateri(
         @Field("post_hapus_materi") post_hapus_materi:String,
         @Field("id_materi") id_materi: String
+    ): ArrayList<ResponseModel>
+
+    @Multipart
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminTambahMateriGambar(
+        @Part("post_tambah_materi_gambar") post_tambah_materi_gambar: RequestBody,
+        @Part("id_materi") id_materi:RequestBody,
+        @Part file_image: MultipartBody.Part,
+        @Part("deskripsi") deskripsi: RequestBody,
+    ): ArrayList<ResponseModel>
+
+    @Multipart
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminUpdateMateriGambar(
+        @Part("post_update_materi_gambar") post_update_materi_gambar: RequestBody,
+        @Part("id_materi_gambar") id_materi_gambar: RequestBody,
+        @Part file_image: MultipartBody.Part,
+        @Part("deskripsi") deskripsi: RequestBody,
+    ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminUpdateMateriGambarNoImage(
+        @Field("post_update_materi_gambar_no_image") post_update_materi_gambar_no_image:String,
+        @Field("id_materi_gambar") id_materi_gambar:String,
+        @Field("deskripsi") deskripsi:String,
+    ): ArrayList<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("buku-digital-kewirausahaan/api/post.php")
+    suspend fun postAdminHapusMateriGambar(
+        @Field("post_hapus_materi_gambar") post_hapus_materi_gambar:String,
+        @Field("id_materi_gambar") id_materi_gambar: String
     ): ArrayList<ResponseModel>
 
     @FormUrlEncoded

@@ -1,5 +1,6 @@
 package com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.detail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.Activi
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogAdminMateriBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogKeteranganBinding
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.databinding.AlertDialogKonfirmasiBinding
+import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.gambar.AdminMateriGambarActivity
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.main.AdminMateriViewModel
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.LoadingAlertDialog
 import com.example.aplikasibukudigitalkewirausahaanbagipemula.utils.OnClickItem
@@ -182,7 +184,14 @@ class AdminMateriDetailActivity : AppCompatActivity() {
                 showClickDeskripsi(deskripsi)
             }
 
-            override fun clickItemSetting(pesanan: MateriModel, it: View) {
+            override fun clickItemGambar(idMateri: String, judul: String, it: View) {
+                val i = Intent(this@AdminMateriDetailActivity, AdminMateriGambarActivity::class.java)
+                i.putExtra("idMateri", idMateri)
+                i.putExtra("judul", judul)
+                startActivity(i)
+            }
+
+            override fun clickItemSetting(materi: MateriModel, it: View) {
                 val popupMenu = PopupMenu(this@AdminMateriDetailActivity, it)
                 popupMenu.inflate(R.menu.popup_edit_hapus)
                 popupMenu.setOnMenuItemClickListener(object :
@@ -190,11 +199,11 @@ class AdminMateriDetailActivity : AppCompatActivity() {
                     override fun onMenuItemClick(menuItem: MenuItem?): Boolean {
                         when (menuItem!!.itemId) {
                             R.id.edit -> {
-                                setShowDialogEdit(pesanan)
+                                setShowDialogEdit(materi)
                                 return true
                             }
                             R.id.hapus -> {
-                                setShowDialogHapus(pesanan)
+                                setShowDialogHapus(materi)
                                 return true
                             }
                         }

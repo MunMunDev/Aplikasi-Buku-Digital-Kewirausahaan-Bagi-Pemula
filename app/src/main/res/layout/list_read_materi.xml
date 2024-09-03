@@ -14,11 +14,17 @@
         android:textColor="@color/black"
         android:textStyle="bold"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"/>
+
     <TextView
         android:id="@+id/tvDeskripsil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="Deskripsi"
         android:textSize="14sp"
         android:textColor="@color/black"
