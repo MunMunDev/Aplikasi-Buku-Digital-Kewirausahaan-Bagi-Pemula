@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.user.main.MainActivity"
+    tools:context="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity"
     android:id="@+id/drawerLayoutMain">
 
     <ScrollView
@@ -49,7 +49,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:elevation="10dp"
-                android:text="Hy, Pelanggan Setia dan setia dan setia dan setia"
+                android:text="Buku Kewirausahaan Bagi Pemula"
                 android:textSize="18sp"
                 android:textColor="@color/text_white"
                 android:textStyle="bold"

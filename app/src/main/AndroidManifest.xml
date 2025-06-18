@@ -24,40 +24,40 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.admin.materi.gambar.AdminMateriGambarActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.gambar.AdminMateriGambarActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.admin.materi.detail.AdminMateriDetailActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.detail.AdminMateriDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.read_materi.ReadMateriActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.read_materi.ReadMateriActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.admin.akun.AdminDetailAkunActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.akun.AdminDetailAkunActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.admin.akun.AdminSemuaAkunActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.akun.AdminSemuaAkunActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.admin.video.AdminVideoActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.video.AdminVideoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.akun.AkunActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.akun.AkunActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.admin.materi.main.AdminMateriActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.materi.main.AdminMateriActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.admin.main.AdminMainActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.main.AdminMainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.register.RegisterActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.login.LoginActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.SplashScreenActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,16 +66,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.user.video.VideoActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.video.VideoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.materi.MateriActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.materi.MateriActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.search.SearchDataActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.search.SearchDataActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.user.main.MainActivity"
+            android:name="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.user.main.MainActivity"
             android:exported="true" />
     </application>
 

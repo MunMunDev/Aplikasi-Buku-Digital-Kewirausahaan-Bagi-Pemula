@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.admin.video.AdminVideoActivity"
+    tools:context="com.mismundev.aplikasibukudigitalkewirausahaanbagipemula.ui.activity.admin.video.AdminVideoActivity"
     android:id="@+id/drawerLayoutMain">
 
     <androidx.constraintlayout.widget.ConstraintLayout
